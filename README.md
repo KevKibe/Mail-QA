@@ -3,22 +3,6 @@ Mail QA is a chat-based web application that is focused on addressing the issue 
 The proposed solution involves using generative AI to streamline email management and improve productivity.<br>
 This repository contains the source code and development history of the Mail QA platform.
 
-## Structure
-```
-├── Mail-QA/
-
-│ ├── API/
-│ │ ├── api.py - API server to receive and respond to request for the chatbot.
-│ │ ├── app.py - chat-interface.
-│ │ ├── auth.py - OAuth and Authorization for the API.
-│ │ ├── gmail_fetch.py - fetching user's email data.
-│ │ ├── langchain_convo.py - initializing the conversation chain using langchain and OpenAI API.
-│ │ ├── requirements.txt - libraries and dependencies for the API.
-│ │ ├── text_preprocess.py - processing email data.
-│ │ ├── token.pickle - storing tokens from OAuth.
-```
-
-
 ## How we are Solving the Problem
 The proposed solution involves using generative AI specifically OpenAI models to streamline email management
 and improve productivity. Here's a breakdown of the key components:
@@ -38,7 +22,20 @@ management and communication features.
 - Have an intuitive user interface that allows users to input prompts, view
 summaries, and access generated responses
 
+## Structure
+```
+├── Mail-QA/
 
+│ ├── API/
+│ │ ├── api.py - API server to receive and respond to request for the chatbot.
+│ │ ├── app.py - chat-interface.
+│ │ ├── auth.py - OAuth and Authorization for the API.
+│ │ ├── gmail_fetch.py - fetching user's email data.
+│ │ ├── langchain_convo.py - initializing the conversation chain using langchain and OpenAI API.
+│ │ ├── requirements.txt - libraries and dependencies for the API.
+│ │ ├── text_preprocess.py - processing email data.
+│ │ ├── token.pickle - storing tokens from OAuth.
+```
 
 ## Screenshots
 ![image](https://github.com/KevKibe/Mail-QA/assets/86055894/1b1fa4d2-4eff-4fdc-9568-0f583d1bf22b)
