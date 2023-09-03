@@ -51,6 +51,38 @@ summaries, and access generated responses
     │ │ ├── style.css - compiled css file
   │ │ ├── js/
     │ │ ├── type.js - auto type animation
+
+│ ├── src/
+│ │ ├── App.js -homepage
+│ │ ├── App.css - styling for homepage
+│ │ ├── index.js - configuration file
+│ │ ├── index.css - configuration file
+│ │ ├── signup/
+  │ │ ├── signup.js - signup page
+│ │ ├── login/
+  │ │ ├── login.js - login page
+│ │ ├── components/
+  │ │ ├── Main
+    │ │ ├── Landing.js
+  │ │ ├── Navbar
+    │ │ ├── Navbar.js
+  │ │ ├── Prompt
+    │ │ ├── Prompt.js
+│ │ ├── contexts/
+  │ │ ├── AuthContext.js
+│ │ ├── assets/
+  │ │ ├── css/
+    │ │ ├── _root.scss - root styles in sass
+    │ │ ├── style.scss - styling for the whole product
+    │ │ ├── style.css - compiled css file
+  │ │ ├── js/
+    │ │ ├── type.js - auto type animation
+  │ │ ├── img/
+    │ │ ├── envelope.png - image of envelope
+    │ │ ├── logo.png - image of logo
+    │ │ ├── mailcart.png - image of mailcart
+    │ │ ├── messages.png - image of a messaged inbox
+    │ │ ├── logo.png - logo for the website
 ```
 
 ## Screenshots
