@@ -49,6 +49,8 @@ summaries, and access generated responses
 
 ![WhatsApp Image 2023-09-03 at 09 20 03](https://github.com/KevKibe/Mail-QA/assets/86055894/1e468c53-eed8-4b34-989d-201dacc64645)
 
+![WhatsApp Image 2023-09-02 at 12 54 52](https://github.com/KevKibe/Mail-QA/assets/86055894/5c6d1c51-d726-464d-917b-d01c31760091)
+
 ## User Journey
 ![image](https://github.com/KevKibe/Mail-QA/assets/86055894/dc39adba-d6b2-4885-b26b-a5a16f66aaf8)
 
