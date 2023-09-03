@@ -3,3 +3,4 @@ outlook_fetch.py
 venv
 az_auth.py
 client_id.json
+credential.json
