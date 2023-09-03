@@ -59,23 +59,23 @@ Here's a breakdown of the key components:
 │ │ ├── index.js - configuration file
 │ │ ├── index.css - configuration file
 │ │ ├── signup/
-  │ │ ├── signup.js - signup page
+| │ │ ├── signup.js - signup page
 │ │ ├── login/
-  │ │ ├── login.js - login page
+| │ │ ├── login.js - login page
 
 │ │ ├── assets/
-  │ │ ├── css/
-    │ │ ├── _root.scss - root styles in sass
-    │ │ ├── style.scss - styling for the whole product
-    │ │ ├── style.css - compiled css file
-  │ │ ├── js/
-    │ │ ├── type.js - auto type animation
-  │ │ ├── img/
-    │ │ ├── envelope.png - image of envelope
-    │ │ ├── logo.png - image of logo
-    │ │ ├── mailcart.png - image of mailcart
-    │ │ ├── messages.png - image of a messaged inbox
-    │ │ ├── logo.png - logo for the website
+| │ │ ├── css/
+| │ │ ├── _root.scss - root styles in sass
+| | │ │ ├── style.scss - styling for the whole product
+| │ │ ├── style.css - compiled css file
+| │ │ ├── js/
+| | │ │ ├── type.js - auto type animation
+| │ │ ├── img/
+| │ │ ├── envelope.png - image of envelope
+| │ │ ├── logo.png - image of logo
+| │ │ ├── mailcart.png - image of mailcart
+| │ │ ├── messages.png - image of a messaged inbox
+| │ │ ├── logo.png - logo for the website
 
 │ │ ├── .gitignore - excludes dependancies
 │ │ ├── LICENSE - UI License
