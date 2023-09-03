@@ -61,6 +61,7 @@ summaries, and access generated responses
 │ │ ├── index.html - configuration file
 │ │ ├── logo.png - logo for the website
 │ │ ├── manifest.json - configuration file
+│ │ ├── 145862897_padded_logo.png - configuration file
 
 │ ├── src/
 │ │ ├── App.js -homepage
