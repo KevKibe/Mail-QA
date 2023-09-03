@@ -38,14 +38,17 @@ management and communication features.
 - Have an intuitive user interface that allows users to input prompts, view
 summaries, and access generated responses
 
-## User Journey
-![image](https://github.com/KevKibe/Mail-QA/assets/86055894/dc39adba-d6b2-4885-b26b-a5a16f66aaf8)
+
 
 ## Screenshots
-![image](https://github.com/KevKibe/Mail-QA/assets/86055894/3c23e9db-3860-41d2-9dec-1a558ff3f2ff)
-![image](https://github.com/KevKibe/Mail-QA/assets/86055894/2fe4d239-0344-4123-a4e2-236c43136294)
-![image](https://github.com/KevKibe/Mail-QA/assets/86055894/992b074d-b796-429e-b415-6607a464ea97)
+![image](https://github.com/KevKibe/Mail-QA/assets/86055894/1b1fa4d2-4eff-4fdc-9568-0f583d1bf22b)
+
+![image](https://github.com/KevKibe/Mail-QA/assets/86055894/34ec481e-e552-4f7b-9181-a3a837ca2358)
+
+![image](https://github.com/KevKibe/Mail-QA/assets/86055894/9a4e6f62-a7d9-4ea2-a22d-f13d9ba55857)
+
 ![WhatsApp Image 2023-09-03 at 09 20 03](https://github.com/KevKibe/Mail-QA/assets/86055894/1e468c53-eed8-4b34-989d-201dacc64645)
 
-
+## User Journey
+![image](https://github.com/KevKibe/Mail-QA/assets/86055894/dc39adba-d6b2-4885-b26b-a5a16f66aaf8)
 
