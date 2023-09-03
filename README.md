@@ -23,7 +23,7 @@ management and communication features.
 summaries, and access generated responses
 
 ## Structure
-```sh
+```
 ├── Mail-QA/
 
 │ ├── API/
