@@ -52,6 +52,11 @@ summaries, and access generated responses
   │ │ ├── js/
     │ │ ├── type.js - auto type animation
 
+│ ├── scripts/
+│ │ ├── build.js - to build markup code
+│ │ ├── start.js - starts the server on localhost
+│ │ ├── test.js - for debugging server
+
 │ ├── src/
 │ │ ├── App.js -homepage
 │ │ ├── App.css - styling for homepage
