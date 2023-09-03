@@ -4,7 +4,9 @@ The proposed solution involves using generative AI to streamline email managemen
 This repository contains the source code and development history of the Mail QA platform.
 
 ## Structure
+```
 ├── Mail-QA/
+
 │ ├── API/
 │ │ ├── api.py - API server to receive and respond to request for the chatbot.
 │ │ ├── app.py - chat-interface.
@@ -14,7 +16,7 @@ This repository contains the source code and development history of the Mail QA 
 │ │ ├── requirements.txt - libraries and dependencies for the API.
 │ │ ├── text_preprocess.py - processing email data.
 │ │ ├── token.pickle - storing tokens from OAuth.
-
+```
 
 
 ## How we are Solving the Problem
