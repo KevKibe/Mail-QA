@@ -57,6 +57,11 @@ summaries, and access generated responses
 │ │ ├── start.js - starts the server on localhost
 │ │ ├── test.js - for debugging server
 
+│ ├── public/
+│ │ ├── index.html - configuration file
+│ │ ├── logo.png - logo for the website
+│ │ ├── manifest.json - configuration file
+
 │ ├── src/
 │ │ ├── App.js -homepage
 │ │ ├── App.css - styling for homepage
