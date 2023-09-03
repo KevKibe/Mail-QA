@@ -29,18 +29,18 @@ Here's a breakdown of the key components:
 │ ├── UI/
 │ │ ├── index.html - UI design for homepage
 │ │ ├── signup/
-  │ │ ├── index.html - signup page
+| │ │ ├── index.html - signup page
 │ │ ├── login/
-  │ │ ├── index.html - login page
+| │ │ ├── index.html - login page
 │ │ ├── prompt/
-  │ │ ├── index.html - prompt page
+| │ │ ├── index.html - prompt page
 │ │ ├── assets/
-  │ │ ├── css/
-    │ │ ├── _root.scss - root styles in sass
-    │ │ ├── style.scss - styling for the whole product
-    │ │ ├── style.css - compiled css file
-  │ │ ├── js/
-    │ │ ├── type.js - auto type animation
+| │ │ ├── css/
+| | │ │ ├── _root.scss - root styles in sass
+| | │ │ ├── style.scss - styling for the whole product
+| | │ │ ├── style.css - compiled css file
+| │ │ ├── js/
+|   │ │ ├── type.js - auto type animation
 
 │ ├── public/
 │ │ ├── index.html - configuration file
@@ -62,15 +62,7 @@ Here's a breakdown of the key components:
   │ │ ├── signup.js - signup page
 │ │ ├── login/
   │ │ ├── login.js - login page
-│ │ ├── components/
-  │ │ ├── Main
-    │ │ ├── Landing.js
-  │ │ ├── Navbar
-    │ │ ├── Navbar.js
-  │ │ ├── Prompt
-    │ │ ├── Prompt.js
-│ │ ├── contexts/
-  │ │ ├── AuthContext.js
+
 │ │ ├── assets/
   │ │ ├── css/
     │ │ ├── _root.scss - root styles in sass
