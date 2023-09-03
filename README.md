@@ -52,16 +52,16 @@ summaries, and access generated responses
   │ │ ├── js/
     │ │ ├── type.js - auto type animation
 
-│ ├── scripts/
-│ │ ├── build.js - to build markup code
-│ │ ├── start.js - starts the server on localhost
-│ │ ├── test.js - for debugging server
-
 │ ├── public/
 │ │ ├── index.html - configuration file
 │ │ ├── logo.png - logo for the website
 │ │ ├── manifest.json - configuration file
 │ │ ├── 145862897_padded_logo.png - configuration file
+
+│ ├── scripts/
+│ │ ├── build.js - to build markup code
+│ │ ├── start.js - starts the server on localhost
+│ │ ├── test.js - for debugging server
 
 │ ├── src/
 │ │ ├── App.js -homepage
@@ -94,6 +94,13 @@ summaries, and access generated responses
     │ │ ├── mailcart.png - image of mailcart
     │ │ ├── messages.png - image of a messaged inbox
     │ │ ├── logo.png - logo for the website
+
+│ │ ├── .gitignore - excludes dependancies
+│ │ ├── LICENSE - UI License
+│ │ ├── README.md - for debugging server
+│ │ ├── index.js - config file
+│ │ ├── package-lock.json - config file
+│ │ ├── package.json - config file
 ```
 
 ## Screenshots
