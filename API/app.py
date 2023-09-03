@@ -1,14 +1,14 @@
 import streamlit as st
 from langchain_convo import preprocess_emails, initialize_embeddings_and_vectorstore, initialize_conversation_chain
 import time
-api_key =  st.secrets["openai"]["api_key"]
+# api_key =  st.secrets["openai"]["api_key"]
 
 st.set_page_config(page_title="Mail QA", page_icon="public\145862897_padded_logo.png", layout="centered")
 st.title("Mail QA")
 
 data = preprocess_emails()
 vectorstore = initialize_embeddings_and_vectorstore(data)
-conversation_chain = initialize_conversation_chain(vectorstore,api_key)
+conversation_chain = initialize_conversation_chain(vectorstore)
 
 
 if "messages" not in st.session_state:
@@ -19,7 +19,7 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 
-if prompt := st.chat_input("You:"):
+if prompt := st.chat_input("Summarize today's emails, find something out from a specific email"):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)

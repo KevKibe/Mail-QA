@@ -17,7 +17,7 @@ load_dotenv('.env')
 def preprocess_emails():
     text_processor = TextProcessor()
     gmail_api = GmailAPI()
-    email_data_list = gmail_api.get_emails(3)
+    email_data_list = gmail_api.get_emails(1)
     # email_content_list = [(email['From'], email['Date'], email['Subject'], email['Body']) for email in email_data_list]
     processed_data = []
 
@@ -58,15 +58,16 @@ def initialize_embeddings_and_vectorstore(data):
     text_splitter = CharacterTextSplitter(separator="\n", chunk_size=chunk_size, chunk_overlap=chunk_overlap, length_function=len)
     text_chunks = text_splitter.split_text(joined_text)
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
+    # print(f"Number of OpenAI tokens used: {embeddings.tokens_used}")
     return vectorstore
 
 
 
-def initialize_conversation_chain(vectorstore, api_key):
+def initialize_conversation_chain(vectorstore):
     llm = ChatOpenAI(
         model_name='gpt-4',
-        model_kwargs={'api_key': api_key}
-    )
+        model_kwargs={'api_key': os.getenv('OPENAI_API_KEY')}
+        )
     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
 
     conversation_chain = ConversationalRetrievalChain.from_llm(
