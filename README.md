@@ -4,9 +4,18 @@ The proposed solution involves using generative AI to streamline email managemen
 This repository contains the source code and development history of the Mail QA platform.
 
 ## Structure
-- ```/API``` includes the code for the API powering the chatbot.
-- ```/UI``` includes the frontend code.
-- ```/public, /scripts and /src``` include the backend code
+├── Mail-QA/
+│ ├── API/
+│ │ ├── api.py - API server to receive and respond to request for the chatbot.
+│ │ ├── app.py - chat-interface.
+│ │ ├── auth.py - OAuth and Authorization for the API.
+│ │ ├── gmail_fetch.py - fetching user's email data.
+│ │ ├── langchain_convo.py - initializing the conversation chain using langchain and OpenAI API.
+│ │ ├── requirements.txt - libraries and dependencies for the API.
+│ │ ├── text_preprocess.py - processing email data.
+│ │ ├── token.pickle - storing tokens from OAuth.
+
+
 
 ## How we are Solving the Problem
 The proposed solution involves using generative AI specifically OpenAI models to streamline email management
