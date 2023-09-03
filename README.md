@@ -23,7 +23,7 @@ management and communication features.
 summaries, and access generated responses
 
 ## Structure
-```
+```sh
 ├── Mail-QA/
 
 │ ├── API/
@@ -35,6 +35,22 @@ summaries, and access generated responses
 │ │ ├── requirements.txt - libraries and dependencies for the API.
 │ │ ├── text_preprocess.py - processing email data.
 │ │ ├── token.pickle - storing tokens from OAuth.
+
+│ ├── UI/
+│ │ ├── index.html - UI design for homepage
+│ │ ├── signup/
+  │ │ ├── index.html - signup page
+│ │ ├── login/
+  │ │ ├── index.html - login page
+│ │ ├── prompt/
+  │ │ ├── index.html - prompt page
+│ │ ├── assets/
+  │ │ ├── css/
+    │ │ ├── _root.scss - root styles in sass
+    │ │ ├── style.scss - styling for the whole product
+    │ │ ├── style.css - compiled css file
+  │ │ ├── js/
+    │ │ ├── type.js - auto type animation
 ```
 
 ## Screenshots
