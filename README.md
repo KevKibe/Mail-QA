@@ -111,6 +111,16 @@ summaries, and access generated responses
 ![image](https://github.com/KevKibe/Mail-QA/assets/86055894/9a4e6f62-a7d9-4ea2-a22d-f13d9ba55857)
 
 ![WhatsApp Image 2023-09-03 at 09 20 03](https://github.com/KevKibe/Mail-QA/assets/86055894/1e468c53-eed8-4b34-989d-201dacc64645)
+![image](https://github.com/KevKibe/Mail-QA/assets/86055894/2c3f843d-48db-4d03-8369-15ac1b712a93)
+![image](https://github.com/KevKibe/Mail-QA/assets/86055894/43453072-e632-49c9-89ab-a9e3fbe0e7e2)
+![image](https://github.com/KevKibe/Mail-QA/assets/86055894/0a85408f-6740-4f96-89b8-93be2bb90265)
+![image](https://github.com/KevKibe/Mail-QA/assets/86055894/122c7a67-72b0-4269-ab18-480041751c8a)
+![image](https://github.com/KevKibe/Mail-QA/assets/86055894/cee5ac9d-480e-4e27-b3ee-18100a0916aa)
+
+
+
+
+
 
 ![WhatsApp Image 2023-09-02 at 12 54 52](https://github.com/KevKibe/Mail-QA/assets/86055894/5c6d1c51-d726-464d-917b-d01c31760091)
 
