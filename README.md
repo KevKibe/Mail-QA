@@ -12,7 +12,7 @@ Here's a breakdown of the key components:
 - Generate concise responses to emails based on user requests.
 
 ## Resources
-[Demo Video](https://drive.google.com/file/d/1ivAI7riE9yAOSYZ1-nWHpN8l8szX46EW/view?usp=sharing)
+[Demo Video](https://drive.google.com/file/d/1ivAI7riE9yAOSYZ1-nWHpN8l8szX46EW/view?usp=sharing) <br>
 [Pitch Deck](https://docs.google.com/presentation/d/12jkcWXsaLJO9XR5Z7PLDtkm17liagl22xOLddlPp6fQ/edit?usp=sharing)
 
 ## Screenshots
