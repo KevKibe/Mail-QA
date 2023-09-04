@@ -11,8 +11,9 @@ Here's a breakdown of the key components:
 - Support for 98 languages as currently supported by the OpenAI API ensuring that users from diverse linguistic backgrounds can translate emails in any language.
 - Generate concise responses to emails based on user requests.
 
-## Demo Video
-[Link](https://drive.google.com/file/d/1ivAI7riE9yAOSYZ1-nWHpN8l8szX46EW/view?usp=sharing)
+## Resources
+[Demo Video](https://drive.google.com/file/d/1ivAI7riE9yAOSYZ1-nWHpN8l8szX46EW/view?usp=sharing)
+[Pitch Deck](https://docs.google.com/presentation/d/12jkcWXsaLJO9XR5Z7PLDtkm17liagl22xOLddlPp6fQ/edit?usp=sharing)
 
 ## Screenshots
 ![image](https://github.com/KevKibe/Mail-QA/assets/86055894/1b1fa4d2-4eff-4fdc-9568-0f583d1bf22b)
