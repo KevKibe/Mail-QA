@@ -13,5 +13,4 @@ beautifulsoup4
 fastapi
 uvicorn
 streamlit
-streamlit-chat
-
+supabase

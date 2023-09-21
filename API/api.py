@@ -8,7 +8,7 @@ app = FastAPI()
 
 data = preprocess_emails()
 vectorstore = initialize_embeddings_and_vectorstore(data)
-conversation_chain = initialize_conversation_chain(vectorstore,api_key)
+conversation_chain = initialize_conversation_chain(vectorstore)
 
 class UserInput(BaseModel):
     prompt: str

@@ -44,7 +44,7 @@ class GmailAPI:
         formatted_date = target_date.strftime('%Y-%m-%d')
         query = f'category:primary is:inbox after:{formatted_date}'
 
-        results = self.service.users().messages().list(userId='me', maxResults=5, q=query).execute()
+        results = self.service.users().messages().list(userId='me', maxResults=20, q=query).execute()
         messages = results.get('messages', [])
 
         email_data_list = []
@@ -55,6 +55,8 @@ class GmailAPI:
 
         return email_data_list
 
-
+# gmail_api = GmailAPI()
+# email_data_list = gmail_api.get_emails(1)
+# print(email_data_list)
 
 

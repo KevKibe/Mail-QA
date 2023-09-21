@@ -10,6 +10,7 @@ from text_preprocess import TextProcessor
 from gmail_fetch import GmailAPI
 from langchain.chat_models import ChatOpenAI
 from langchain.text_splitter import CharacterTextSplitter
+from langchain.chains import RetrievalQA
 
 # Load environment variables
 load_dotenv('.env')
@@ -61,19 +62,55 @@ def initialize_embeddings_and_vectorstore(data):
     # print(f"Number of OpenAI tokens used: {embeddings.tokens_used}")
     return vectorstore
 
-
+def similarity_search(vectorstore, query):
+   return vectorstore.similarity_search(query, k=3)
 
 def initialize_conversation_chain(vectorstore):
-    llm = ChatOpenAI(
-        model_name='gpt-4',
-        model_kwargs={'api_key': os.getenv('OPENAI_API_KEY')}
-        )
-    memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
+    llm = ChatOpenAI(openai_api_key=os.getenv('OPENAI_API_KEY'), model_name='gpt-3.5-turbo', temperature=0.0)
 
-    conversation_chain = ConversationalRetrievalChain.from_llm(
-        llm=llm,
-        retriever=vectorstore.as_retriever(),
-        memory=memory
-    )
+    qa = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=vectorstore.as_retriever(search_kwargs={'k': 1}))
 
-    return conversation_chain
+    return qa
+
+
+data = preprocess_emails()
+vectorstore = initialize_embeddings_and_vectorstore(data)
+query = "what do the emails from LinkedIn say?"
+# similar_docs = similarity_search(vectorstore, query)
+# similar_text = ' '.join(similar_docs)
+
+qa= initialize_conversation_chain(vectorstore)
+response = qa.run(query)
+
+# def initialize_conversation_chain(vectorstore):
+#     llm = ChatOpenAI(
+#         model_name='gpt-3.5-turbo',
+#         model_kwargs={'api_key': os.getenv('OPENAI_API_KEY')}
+#         )
+#     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
+
+#     conversation_chain = ConversationalRetrievalChain.from_llm(
+#         llm=llm,
+#         retriever=vectorstore.as_retriever(),
+#         memory=memory
+#     )
+
+#     return conversation_chain
+
+
+
+
+
+# data = preprocess_emails()
+# print(data)
+# print(len(data))
+# print(type(data))
+# vectorstore = initialize_embeddings_and_vectorstore(data)
+# conversation_chain = initialize_conversation_chain(vectorstore)
+
+# while True:
+#     user_input = input(">>> ")
+#     if user_input == "quit":
+#         break
+#     else:
+#         print(conversation_chain.run(user_input))
