@@ -1,10 +1,19 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
+import axios from 'axios';
 
 function Signup() {
   const responseGoogle = (response) => {
     // Handle the user data received from Google OAuth
-    console.log('Google user data:', response);
+    const data = response.profileObj
+
+    console.log('Google user token:', response.accessToken);
+    console.log('Google user email:', data);
+
+    axios.post('http://localhost:8000/updatedatabase', {
+      accessToken: response.accessToken,
+    email: data.email
+    });
     // You can send this user data to your server for registration/authentication.
   };
 
