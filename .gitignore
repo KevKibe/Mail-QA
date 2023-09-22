@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/backend
+/backend/node_modules
 /config
 /help
 /.pnp
