@@ -1,26 +1,18 @@
-import os 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
-from langchain_convo import preprocess_emails, initialize_embeddings_and_vectorstore, initialize_conversation_chain
-import uvicorn
-
+from conversation import ConversationChain 
 app = FastAPI()
-
-data = preprocess_emails()
-vectorstore = initialize_embeddings_and_vectorstore(data)
-conversation_chain = initialize_conversation_chain(vectorstore)
+chatbot = ConversationChain()  
 
 class UserInput(BaseModel):
     prompt: str
 
-@app.post("/chat/")
-async def run_conversation(input_data: UserInput):
-    user_input = input_data.prompt
-    response = conversation_chain.run(user_input)
+@app.post("/chat")
+async def chat_with_bot(user_input: UserInput):
+    response = chatbot.run_chat(user_input.prompt)  
     return {"response": response}
 
-
-    
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
+
+    uvicorn.run(app, host="0.0.0.0", port=8000)
