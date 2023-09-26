@@ -1,0 +1,13 @@
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-api-python-client
+slack-sdk
+slackeventsapi
+slack-bolt
+python-dotenv
+beautifulsoup4
+openai
+langchain
+tiktoken
+faiss-cpu
