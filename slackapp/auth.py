@@ -1,15 +1,13 @@
-import os.path
-import pickle
-from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
+
 def authenticate():
     """Authenticate the user and obtain valid credentials."""
-    credentials = load_credentials()
+    credentials = None
 
     if not credentials or not credentials.valid:
         if credentials and credentials.expired and credentials.refresh_token:
@@ -17,24 +15,8 @@ def authenticate():
             credentials.refresh(Request())
         else:
             print('Fetching New Tokens...')
-            credentials = run_authentication_flow()
-            save_credentials(credentials)
-
-    return credentials
-
-def load_credentials():
-    """Load credentials from a saved file if available."""
-    credentials = None
-
-    if os.path.exists('token.pickle'):
-        print('Loading Credentials from File...')
-        try:
-            with open('token.pickle', 'rb') as token:
-                credentials = pickle.load(token)
-        except Exception as e:
-            print(f'Error loading credentials: {str(e)}')
-
-    return credentials
+            credentials = run_authentication_flow() 
+    return credentials.to_json()
 
 def run_authentication_flow():
     """Run the OAuth 2.0 authentication flow to get new credentials."""
@@ -48,12 +30,3 @@ def run_authentication_flow():
 
     return flow.credentials
 
-
-def save_credentials(credentials):
-    """Save credentials to a file for future use."""
-    try:
-        with open('token.pickle', 'wb') as f:
-            print('Saving Credentials for Future Use...')
-            pickle.dump(credentials, f)
-    except Exception as e:
-        print(f'Error saving credentials: {str(e)}')

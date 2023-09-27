@@ -1,6 +1,9 @@
 import base64
+import json
 from auth import authenticate
 from googleapiclient.discovery import build
+from google.oauth2.credentials import Credentials
+
 from datetime import datetime, timedelta
 
 def parse_msg(msg):
@@ -9,8 +12,9 @@ def parse_msg(msg):
     return msg.get("snippet")
 
 class GmailAPI:
-    def __init__(self):
-        self.credentials = authenticate()
+    def __init__(self,access_token):
+        self.token_data = json.loads(access_token)
+        self.credentials = Credentials.from_authorized_user_info(self.token_data)
         self.service = build('gmail', 'v1', credentials=self.credentials)
 
     def get_email_content(self, message_id):
@@ -55,8 +59,5 @@ class GmailAPI:
 
         return email_data_list
 
-# gmail_api = GmailAPI()
-# email_data_list = gmail_api.get_emails(1)
-# print(email_data_list)
 
 

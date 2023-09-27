@@ -11,13 +11,14 @@ from langchain.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 
 class ConversationChain:
-    def __init__(self):
+    def __init__(self, access_token):
         load_dotenv()
         self.openai_api_key = os.getenv('OPENAI_API_KEY')
+        self.access_token = access_token
 
     def preprocess_emails(self):
         text_processor = TextProcessor()
-        gmail_api = GmailAPI()
+        gmail_api = GmailAPI(self.access_token)
         email_data_list = gmail_api.get_emails(5)
         # email_content_list = [(email['From'], email['Date'], email['Subject'], email['Body']) for email in email_data_list]
         processed_data = []
@@ -69,8 +70,3 @@ class ConversationChain:
 
         return conversation_chain.run(user_input)
     
-# if __name__ == "__main__":
-#     chat_bot = ConversationChain()
-#     user_input = input(">>> ")
-#     response = chat_bot.run_chat(user_input)
-#     print(response)
