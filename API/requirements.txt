@@ -18,4 +18,4 @@ supabase
 gotrue
 httpx
 websockets
-
+chromadb
