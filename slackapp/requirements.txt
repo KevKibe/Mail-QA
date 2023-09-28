@@ -12,3 +12,4 @@ langchain
 tiktoken
 faiss-cpu
 supabase
+chromadb

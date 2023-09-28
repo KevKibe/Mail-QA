@@ -29,4 +29,3 @@ def run_authentication_flow():
     flow.run_local_server(port=8080, prompt='consent', authorization_prompt_message='')
 
     return flow.credentials
-
