@@ -10,6 +10,7 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.chains import RetrievalQA
+from langchain.prompts.prompt import PromptTemplate
 
 
 
@@ -60,9 +61,16 @@ class ConversationChain:
             model_name='gpt-3.5-turbo',
             model_kwargs={'api_key': self.openai_api_key}
         )
+        template = """You are an AI assistant that helps with emails given a question and context as emails.
+                      The AI is talkative and descriptive. 
+                      If the AI does not know the answer to a question,ask to provide more information about question. 
+                      Question: {question} {context}
+                      Answer:"""
+        prompt = PromptTemplate(input_variables=["question", "context"], template=template) 
         memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
         conversation_chain = RetrievalQA.from_chain_type(
             llm=llm,
+            chain_type_kwargs={"prompt": prompt},
             memory=memory,
             retriever=vectorstore.as_retriever()
         )

@@ -24,7 +24,7 @@ def fetch_access_token(email):
         return None
 
 
-email = "kchegz234@gmail.com"    
+email = "keviinkibe@gmail.com"    
 access_token = fetch_access_token(email)
 start_time = time.time()
 chatbot = ConversationChain(access_token)
