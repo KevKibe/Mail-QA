@@ -59,7 +59,8 @@ class ConversationChain:
         """Initializes the conversation chain for the chatbot."""
         llm = ChatOpenAI(
             model_name='gpt-3.5-turbo',
-            model_kwargs={'api_key': self.openai_api_key}
+            model_kwargs={'api_key': self.openai_api_key},
+            temperature= 0
         )
         template = """You are an AI assistant that helps with emails given a question and context as emails.
                       The AI is talkative and descriptive. 
