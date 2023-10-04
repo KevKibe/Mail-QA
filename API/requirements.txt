@@ -19,3 +19,4 @@ gotrue
 httpx
 websockets
 chromadb
+python-multipart

@@ -1,25 +1,20 @@
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from conversation import ConversationChain
+from token_fetch import fetch_access_token
 
 app = FastAPI()
-chatbot = ConversationChain()
 
-class UserInput(BaseModel):
-    prompt: str
+class InputData(BaseModel):
+    email: str
+    user_input: str
 
-@app.post("/chat")
-async def chat_with_bot(user_input: UserInput):
+@app.post("/get_response/")
+async def get_response(data: InputData):
     try:
-        response = chatbot.run_chat(user_input.prompt)
+        access_token = fetch_access_token(data.email)
+        chatbot = ConversationChain(access_token)
+        response = chatbot.run_chat(data.user_input)
         return {"response": response}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Chatbot error: {str(e)}")
-
-if __name__ == "__main__":
-    import uvicorn
-
-    try:
-        uvicorn.run(app, host="0.0.0.0", port=8000)
-    except Exception as e:
-        print(f"Uvicorn error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
