@@ -11,8 +11,7 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from langchain.prompts.prompt import PromptTemplate
-
-
+from file_extractor import SlackFileRetriever
 
 class ConversationChain:
     def __init__(self, access_token):
@@ -32,6 +31,18 @@ class ConversationChain:
             processed_data.append(str(processed_email_data))
 
         return processed_data
+    
+    def join_data(self,email_data):
+        slack_file_retriever = SlackFileRetriever()
+        file_list = slack_file_retriever.get_file_list()
+        file_data = []
+        for file_info in file_list:
+            extracted_data = slack_file_retriever.download_extract_text_remove(file_info)
+            file_data.append(extracted_data)
+        
+        data = [item for item in email_data if item is not None]+file_data
+        return data
+        
 
     def initialize_embeddings_and_vectorstore(self, data):
         """Initializes the embeddings and vectorstore for the chatbot."""
@@ -49,8 +60,11 @@ class ConversationChain:
         all_text_chunks = []
 
         for item in data:
-            text_chunks = text_splitter.split_text(item)
-            all_text_chunks.extend(text_chunks)
+            if item is not None and isinstance(item, str):
+                text_chunks = text_splitter.split_text(item)
+                all_text_chunks.extend(text_chunks)
+            else:
+                print(f"Skipping invalid input: {item}")
 
         vectorstore = FAISS.from_texts(texts=all_text_chunks, embedding=embeddings)
         return vectorstore
@@ -62,7 +76,7 @@ class ConversationChain:
             model_kwargs={'api_key': self.openai_api_key},
             temperature= 0
         )
-        template = """You are an AI assistant that helps with emails given a question and context as emails.
+        template = """You are an AI assistant that helps with email data and workspace data given a question and context as worksapace data and emails.
                       The AI is talkative and descriptive. 
                       If the AI does not know the answer to a question,ask to provide more information about question. 
                       Question: {question} {context}
@@ -80,8 +94,9 @@ class ConversationChain:
     def run_chat(self, user_input):
         """Runs the chatbot."""
         emails = self.preprocess_emails()
-        vectorstore = self.initialize_embeddings_and_vectorstore(emails)
+        data = self.join_data(emails)
+        vectorstore = self.initialize_embeddings_and_vectorstore(data)
         conversation_chain = self.initialize_conversation_chain(vectorstore)
 
         return conversation_chain.run(user_input)
-    
+        
