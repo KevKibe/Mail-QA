@@ -77,6 +77,7 @@ class ConversationChain:
             temperature= 0
         )
         template = """You are an AI assistant that helps with email data and workspace data given a question and context as worksapace data and emails.
+                      Any mention of company data is data in the knowledge base that is not related to emails and it is shared in a workspace environment.
                       The AI is talkative and descriptive. 
                       If the AI does not know the answer to a question,ask to provide more information about question. 
                       Question: {question} {context}
@@ -94,8 +95,8 @@ class ConversationChain:
     def run_chat(self, user_input):
         """Runs the chatbot."""
         emails = self.preprocess_emails()
-        data = self.join_data(emails)
-        vectorstore = self.initialize_embeddings_and_vectorstore(data)
+        # data = self.join_data(emails)
+        vectorstore = self.initialize_embeddings_and_vectorstore(emails)
         conversation_chain = self.initialize_conversation_chain(vectorstore)
 
         return conversation_chain.run(user_input)

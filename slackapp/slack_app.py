@@ -1,5 +1,6 @@
 import os
 from slack_convo import ConversationChain
+import time
 from auth import authenticate
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
@@ -72,9 +73,13 @@ def handle_message(event, say):
     if channel_type == 'im':      
         access_token = fetch_access_token(email)
         chatbot = ConversationChain(access_token)
+        start_time = time.time()
         user_input = message
         response = chatbot.run_chat(user_input) 
         say(f"{response}")
+        end_time = time.time()
+        duration = end_time - start_time
+        print(duration)
 
 if __name__ == "__main__":
     SocketModeHandler(app, os.environ["slack_app_token"]).start()
