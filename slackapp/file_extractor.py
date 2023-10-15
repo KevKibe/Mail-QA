@@ -82,15 +82,15 @@ class SlackFileRetriever:
             extracted_text = text_extractor.extract_text()
             extracted_text = self.preprocess(extracted_text)
             return extracted_text
-            # print(f"Text extracted from {file_name}:")
+            # print(f"Text extracted from {file_name}:"
             # print(extracted_text)
             # os.remove(file_name)
         else:
             print(f"Failed to download: {file_name}")
 
-# if __name__ == "__main__":
-#     slack_file_retriever = SlackFileRetriever()
-#     file_list = slack_file_retriever.get_file_list()
-#     print(file_list)
-#     for file_info in file_list:
-#         slack_file_retriever.download_extract_text_remove(file_info)
+if __name__ == "__main__":
+    slack_file_retriever = SlackFileRetriever()
+    file_list = slack_file_retriever.get_file_list()
+    print(file_list)
+    for file_info in file_list:
+        slack_file_retriever.download_extract_text_remove(file_info)

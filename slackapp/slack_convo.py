@@ -23,7 +23,7 @@ class ConversationChain:
         """Fetching and preprocesses the emails."""
         text_processor = TextProcessor()
         gmail_api = GmailAPI(self.access_token)
-        email_data_list = gmail_api.get_emails(1)
+        email_data_list = gmail_api.get_emails(5)
         processed_data = []
 
         for email_data in email_data_list:
@@ -95,8 +95,8 @@ class ConversationChain:
     def run_chat(self, user_input):
         """Runs the chatbot."""
         emails = self.preprocess_emails()
-        # data = self.join_data(emails)
-        vectorstore = self.initialize_embeddings_and_vectorstore(emails)
+        data = self.join_data(emails)
+        vectorstore = self.initialize_embeddings_and_vectorstore(data)
         conversation_chain = self.initialize_conversation_chain(vectorstore)
 
         return conversation_chain.run(user_input)
