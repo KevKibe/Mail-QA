@@ -13,8 +13,9 @@ function App() {
   useEffect(() => {
     function start() {
       gapi.client.init({
-        clientId:'965274681666-p08jm4et6g955b9fmm0jeirg410qcug4.apps.googleusercontent.com',
-        scope: '',
+        clientId:'992390497960-a6cuvp6kaf44en2v1ktu0r29hibj7bks.apps.googleusercontent.com',
+        scope:"https://www.googleapis.com/auth/gmail.readonly"
+
       });
     }
 

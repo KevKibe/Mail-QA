@@ -1,50 +1,84 @@
-import React, { useContext,useState,useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import logo from '../../assets/img/logo.png';
-import { gapi } from 'gapi-script';
+
 function Navbar() {
   // Assume your authentication context provides a `isLoggedIn` property
   const isLoggedIn = localStorage.getItem('accessToken');
   const accessToken = isLoggedIn;
-  const [userinfo,setUserinfo]=useState();
+  const [userinfo, setUserinfo] = useState();
 
-  useEffect(()=>{
+  useEffect(() => {
     //FETCH API
-       // Make a request to the Google API to fetch user information
-        fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            // `data` contains user information, including the username
-            console.log('User information:', data);
-            setUserinfo(data);
-            // You can access the username as data.email or data.name, depending on the response format
-          })
-          .catch((error) => {
-            console.error('Error fetching user information:', error);
-          });
+    // Make a request to the Google API to fetch user information
+    fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // `data` contains user information, including the username
+        console.log('User information:', data);
+        setUserinfo(data);
+        // You can access the username as data.email or data.name, depending on the response format
+      })
+      .catch((error) => {
+        console.error('Error fetching user information:', error);
+      });
     //FETCH API
-  },[])
-   
+  }, []);
+
   return (
-    <header>
-      <p className="title">
-        <img src={logo} alt="Mail QA" height="85%" />
-      </p>
-
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          {isLoggedIn ? null : <li><a href="/signup">Signup</a></li>} 
-          {isLoggedIn ? null : <li><a href="/login">Login</a></li>}
-          <li><a href="/prompt">Prompt</a></li>
-          <li><a href="/prompt">{userinfo ? userinfo.name ? 'Online' : 'Offline' : 'Loading..'}</a></li>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <a className="navbar-brand" href="/">
+        <img src={logo} alt="Mail QA" height="40" />
+      </a>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+      <div className="collapse navbar-collapse" id="navbarNav">
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <a className="nav-link" href="/">
+              Home
+            </a>
+          </li>
+          {!isLoggedIn && (
+            <li className="nav-item">
+              <a className="nav-link" href="/signup">
+                Signup
+              </a>
+            </li>
+          )}
+          {!isLoggedIn && (
+            <li className="nav-item">
+              <a className="nav-link" href="/login">
+                Login
+              </a>
+            </li>
+          )}
+          <li className="nav-item">
+            <a className="nav-link" href="/prompt">
+              Prompt
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link">
+              {userinfo ? (userinfo.name ? 'Online' : 'Offline') : 'Loading..'}
+            </a>
+          </li>
         </ul>
-      </nav>
-    </header>
+      </div>
+    </nav>
   );
 }
 
