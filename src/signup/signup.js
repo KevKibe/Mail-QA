@@ -5,29 +5,19 @@ import axios from 'axios';
 function Signup() {
   const responseGoogle = (response) => {
     // Handle the user data received from Google OAuth
-<<<<<<< HEAD
     const data = response.profileObj;
 
     console.log('Google user token:', response);
-=======
-    const data = response.profileObj
-
-    console.log('Google user token:', response.accessToken);
->>>>>>> 72c98daff0058448ced58be53d7357940333543c
     console.log('Google user email:', data);
 
     axios.post('http://localhost:8000/updatedatabase', {
       accessToken: response.accessToken,
-<<<<<<< HEAD
       email: data.email,
       client_id: '992390497960-a6cuvp6kaf44en2v1ktu0r29hibj7bks.apps.googleusercontent.com',
       client_secret: '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',
       token_uri: 'https://oauth2.googleapis.com/token',
       expiry: response.tokenObj.expires_in,
       refresh_token: response.tokenObj.access_token,
-=======
-    email: data.email
->>>>>>> 72c98daff0058448ced58be53d7357940333543c
     });
     // You can send this user data to your server for registration/authentication.
   };
