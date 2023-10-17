@@ -36,10 +36,6 @@
 ![image](https://github.com/KevKibe/Mail-QA/assets/86055894/03148eb9-751f-4b99-8196-42f64712f40b)
 
 
-
-
-
-
-## User Journey
-![image](https://github.com/KevKibe/Mail-QA/assets/86055894/dc39adba-d6b2-4885-b26b-a5a16f66aaf8)
+## License
+This repository is licensed under [MIT License](https://github.com/KevKibe/Mail-QA/edit/main/LICENSE)
 
