@@ -36,14 +36,16 @@ class SlackFileRetriever:
                 files = response["files"]
                 if files:
                     for file in files:
-                        file_info = {
+                        if 'download/canvas' not in file["url_private_download"]:
+                           file_info = {
                             "channel_name": channel_name,
                             "file_name": file["name"],
                             "file_url": file["url_private_download"]
                         }
-                        file_list.append(file_info)
+                           file_list.append(file_info)
         except SlackApiError as e:
-            print(f"Error: {e.response['error']}")
+            if e.response['error'] != 'not_in_channel':
+                print(f"Error: {e.response['error']}")
         return file_list
 
     @staticmethod
@@ -91,6 +93,8 @@ class SlackFileRetriever:
 if __name__ == "__main__":
     slack_file_retriever = SlackFileRetriever()
     file_list = slack_file_retriever.get_file_list()
-    print(file_list)
+    # for file in file_list:
+    #     print(file)
     for file_info in file_list:
-        slack_file_retriever.download_extract_text_remove(file_info)
+        extracted_text = slack_file_retriever.download_extract_text_remove(file_info)
+        # print(extracted_text)

@@ -84,5 +84,3 @@ class TextExtractor:
             text += paragraph.text
         return text
     
-
-

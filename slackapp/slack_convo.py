@@ -23,7 +23,7 @@ class ConversationChain:
         """Fetching and preprocesses the emails."""
         text_processor = TextProcessor()
         gmail_api = GmailAPI(self.access_token)
-        email_data_list = gmail_api.get_emails(5)
+        email_data_list = gmail_api.get_emails(1)
         processed_data = []
 
         for email_data in email_data_list:
