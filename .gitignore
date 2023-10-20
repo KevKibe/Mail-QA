@@ -34,3 +34,5 @@ yarn-error.log*
 # slackapp
 slackapp/venv
 .env
+slackapp/all_texts.txt
+slackapp/emails.txt

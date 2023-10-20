@@ -13,3 +13,5 @@ tiktoken
 faiss-cpu
 supabase
 chromadb
+boto3
+pdfminer

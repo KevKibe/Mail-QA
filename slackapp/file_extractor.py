@@ -38,6 +38,7 @@ class SlackFileRetriever:
                     for file in files:
                         if 'download/canvas' not in file["url_private_download"]:
                            file_info = {
+                            "file_id":file['id'],     
                             "channel_name": channel_name,
                             "file_name": file["name"],
                             "file_url": file["url_private_download"]
@@ -74,6 +75,7 @@ class SlackFileRetriever:
         Returns:
             None
         """
+        file_id = file_info["file_id"]
         file_name = file_info['file_name']
         file_url = file_info['file_url']
         response = requests.get(file_url, headers={"Authorization": f"Bearer {self.token}"})
@@ -84,17 +86,6 @@ class SlackFileRetriever:
             extracted_text = text_extractor.extract_text()
             extracted_text = self.preprocess(extracted_text)
             return extracted_text
-            # print(f"Text extracted from {file_name}:"
-            # print(extracted_text)
-            # os.remove(file_name)
         else:
             print(f"Failed to download: {file_name}")
 
-if __name__ == "__main__":
-    slack_file_retriever = SlackFileRetriever()
-    file_list = slack_file_retriever.get_file_list()
-    # for file in file_list:
-    #     print(file)
-    for file_info in file_list:
-        extracted_text = slack_file_retriever.download_extract_text_remove(file_info)
-        # print(extracted_text)
