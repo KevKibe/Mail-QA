@@ -8,7 +8,6 @@ from supabase import create_client
 from dotenv import load_dotenv
 load_dotenv()
 
-openai_api_key = os.getenv('OPENAI_API_KEY')
 supabase_url = os.getenv('SUPABASE_URL')
 supabase_key = os.getenv('SUPABASE_KEY')
 supabase_client = create_client(supabase_url, supabase_key)
@@ -59,82 +58,7 @@ class EmailUploader:
             with open("emails.txt", "w") as f:
                 f.write(txt)
             self.upload_to_s3("emails.txt", "mailqa-bucket")
-            time.sleep(90)  # Wait for 90 seconds
+            time.sleep(5)  
 
 email_processor = EmailUploader("keviinkibe@gmail.com")
 email_processor.process_emails_continuously()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# embeddings = OpenAIEmbeddings(
-#             model='text-embedding-ada-002',
-#             openai_api_key=openai_api_key
-#         )
-
-# fs = LocalFileStore("./cache/")
-
-# cached_embedder = CacheBackedEmbeddings.from_bytes_store(
-#     embeddings, fs, namespace=embeddings.model
-# )
-
-
-# chunk_size = 1000
-# chunk_overlap = 200
-# text_splitter = CharacterTextSplitter(separator = '\n', chunk_size=chunk_size, chunk_overlap=chunk_overlap)
-# text_chunks = text_splitter.split_text(txt)
-# vectorstore = FAISS.from_texts(texts=text_chunks, embedding=cached_embedder)
-
-# llm = ChatOpenAI(
-#             model_name='gpt-3.5-turbo',
-#             model_kwargs={'api_key': openai_api_key},
-#             temperature= 0
-#         )
-# template = """As an AI assistant, I assist with email and workspace data based on provided questions and context. 
-#             Company data refers to non-email knowledge base data shared in a workspace. 
-#             If I can't answer a question, I'll request more information. 
-#             Question: {question} {context}
-#             Answer:"""
-# prompt_template = PromptTemplate(input_variables=["question", "context"], template=template) 
-# memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
-# conversation_chain = RetrievalQA.from_chain_type(
-#             llm=llm,
-#             # chain_type_kwargs={"prompt": prompt_template},
-#             memory=memory,
-#             retriever=vectorstore.as_retriever()
-#         )
-
-
-# prompt = input(">>>")
-# start_time = time.time()
-# response = conversation_chain.run(prompt)
-# end_time = time.time()
-# duration = end_time - start_time
-# print(response)
-# print(duration)

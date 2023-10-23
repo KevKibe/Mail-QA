@@ -1,5 +1,6 @@
 import os
 from slack_convo import ConversationChain
+from agent import Agent
 import time
 from auth import authenticate
 from slack_sdk import WebClient
@@ -71,11 +72,12 @@ def handle_message(event, say):
     check_email_and_authenticate(email, supabase_client)
 
     if channel_type == 'im':      
-        access_token = fetch_access_token(email)
-        chatbot = ConversationChain(access_token)
+        # access_token = fetch_access_token(email)
+        agent = Agent()
+        # chatbot = ConversationChain(access_token)
         start_time = time.time()
         user_input = message
-        response = chatbot.run_chat(user_input) 
+        response = agent.run(user_input) 
         say(f"{response}")
         end_time = time.time()
         duration = end_time - start_time

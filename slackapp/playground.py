@@ -4,6 +4,7 @@ from langchain.tools import BaseTool
 from langchain.agents import AgentType, initialize_agent
 from langchain.chat_models import ChatOpenAI
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
+import time
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -40,7 +41,28 @@ class DataFetchingTool(BaseTool):
     def _arun(self, query: str):
         raise NotImplementedError("This tool does not support async")
 
-tools = [DataFetchingTool()]
+
+class EmailFetchingTool(BaseTool):
+    name = "Email Data Fetcher"
+    description = ("use this tool to get a users email data and inbox, do not use it if query involves company data")
+
+    def _run(self, query: str):
+        s3 = boto3.client('s3')
+        try:
+            s3.download_file('mailqa-bucket', 'emails.txt', "emails.txt")
+            print(f"File {'emails.txt'} downloaded successfully from {'mailqa-bucket'}")
+            with open('emails.txt', 'r') as file:
+                content = file.read()
+            return content
+        except Exception as e:
+            print(f"Error downloading {'emails.txt'} from {'mailqa-bucket'}: {e}")
+
+    def _arun(self, query: str):
+        raise NotImplementedError("This tool does not support async")
+
+
+
+tools = [ DataFetchingTool(), EmailFetchingTool()]
 
 sys_msg = """Assistant is a large language model trained by OpenAI.
 
@@ -51,16 +73,26 @@ Assistant is constantly learning and improving, and its capabilities are constan
 Overall, Assistant is a powerful system that can help with a wide range of tasks and provide valuable insights and information on a wide range of topics. Whether you need help with a specific question or just want to have a conversation about a particular topic, Assistant is here to assist.
 """
 
-
 agent = initialize_agent(
-    agent='chat-conversational-react-description',
-    tools=tools,
-    llm=llm,
-    verbose=True,
-    max_iterations=3,
-    early_stopping_method='generate',
-    memory=conversational_memory
+    tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True
 )
+
+# prompt = input(">>>")
+# start_time = time.time()
+# agent.run(prompt)
+# end_time = time.time()
+# duration = end_time-start_time
+# print(duration)
+
+# agent = initialize_agent(
+#     agent='chat-conversational-react-description',
+#     tools=tools,
+#     llm=llm,
+#     verbose=True,
+#     max_iterations=3,
+#     early_stopping_method='generate',
+#     memory=conversational_memory
+# )
 
 new_prompt = agent.agent.create_prompt(
     system_message=sys_msg,
@@ -70,5 +102,9 @@ agent.agent.llm_chain.prompt = new_prompt
 
 # update the agent tools
 agent.tools = tools
-
-agent(f"from the company data what are the milestones for the A2SV hackathon project")
+prompt = input(">>>")
+start_time = time.time()
+agent.run(prompt)
+end_time = time.time()
+duration = end_time-start_time
+print(duration)
