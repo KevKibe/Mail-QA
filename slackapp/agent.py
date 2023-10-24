@@ -49,13 +49,48 @@ class EmailFetchingTool(BaseTool):
 
     def _arun(self, query: str):
         raise NotImplementedError("This tool does not support async")
+
+
+class EmailParserTool(BaseTool):
+    name = "Email Parser Tool"
+    description = "Use this tool to parse the email receiver, subject, and body from a given prompt."
+
+    def _run(self, query: str):
+        email_receiver = ""
+        subject = ""
+        body = ""
+        lines = prompt.split("\n")
+        for line in lines:
+            if line.startswith("To:"):
+                email_receiver = line.split(":")[1].strip()
+            elif line.startswith("Subject:"):
+                subject = line.split(":")[1].strip()
+            elif line.startswith("Body:"):
+                body = line.split(":")[1].strip()
+
+        return {
+            "email_receiver": email_receiver,
+            "subject": subject,
+            "body": body
+        }
     
+    def _arun(self, query: str):
+        raise NotImplementedError("This tool does not support async")
+
+
+
+   
 class EmailSendingTool(BaseTool):
     name = "Email Sender Tool"
     description = ("Use this tool to send an email on behalf of the user")
 
-    def _run(self, email_receiver, subject,body):
+    def _run(self, query:str):
         load_dotenv()
+        email_parser_tool = EmailParserTool()
+        parsed_data = email_parser_tool.run(prompt)
+        email_receiver = parsed_data["email_receiver"]
+        subject = parsed_data["subject"]
+        body = parsed_data["body"]
         email_sender = "keviinkibe@gmail.com"
         email_password = os.getenv('email_password')
         em = EmailMessage()
@@ -104,8 +139,10 @@ class Agent:
         #         self.tools, self.llm, agent=AgentType.STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION , verbose=True
         #         )
 
+
         self.agent = initialize_agent(
-            agent='structured-chat-zero-shot-react-description',
+            agent = 'chat_zero_shot_react_description',
+            # agent='structured-chat-zero-shot-react-description',
             tools=self.tools,
             llm=self.llm,
             verbose=True,
@@ -130,4 +167,3 @@ if __name__ == "__main__":
     prompt = input(">>>")
     resp = chat_assistant.run(prompt)
     print(resp)
-

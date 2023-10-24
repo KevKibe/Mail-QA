@@ -64,7 +64,7 @@ class SlackFileUploader:
                         with open("all_texts.txt","w") as text_file:
                             text_file.write(paragraph_text)
 
-                        self.upload_to_s3("all_texts.txt", "mailqa-bucket")
+                        self.upload_to_s3("all_texts.txt", "mailqa-bucket-01")
             time.sleep(1)  
 
 

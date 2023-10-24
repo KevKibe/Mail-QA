@@ -73,8 +73,9 @@ def handle_message(event, say):
 
     if channel_type == 'im':      
         # access_token = fetch_access_token(email)
-        agent = Agent()
+        
         # chatbot = ConversationChain(access_token)
+        agent = Agent()
         start_time = time.time()
         user_input = message
         response = agent.run(user_input) 

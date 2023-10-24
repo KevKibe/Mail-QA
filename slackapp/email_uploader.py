@@ -57,7 +57,7 @@ class EmailUploader:
             txt = self.preprocess_emails()
             with open("emails.txt", "w") as f:
                 f.write(txt)
-            self.upload_to_s3("emails.txt", "mailqa-bucket")
+            self.upload_to_s3("emails.txt", "mailqa-bucket-01")
             time.sleep(5)  
 
 email_processor = EmailUploader("keviinkibe@gmail.com")
