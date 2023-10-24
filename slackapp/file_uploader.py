@@ -57,7 +57,7 @@ class SlackFileUploader:
                         print(f"New file added! Channel: {channel_name}, File Name: {file_name}, File URL: {file_url}")
                         
                         extracted_text = self.slack_file_retriever.download_extract_text_remove(file_info)
-                        all_texts += f"File Name: {file_name}\n" + extracted_text +"\n"
+                        all_texts += f"File Name: {file_name}\nContent: {extracted_text}\n"
                         with open("all_texts.txt","w") as text_file:
                             text_file.write(all_texts)
                         paragraph_text = self.convert_to_paragraph("all_texts.txt")

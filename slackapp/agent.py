@@ -1,114 +1,18 @@
 import os
 import boto3
-import ssl
-import smtplib
+import time
 from dotenv import load_dotenv
-from email.message import EmailMessage
-from langchain.tools import BaseTool
 from langchain.agents import AgentType, initialize_agent
 from langchain.chat_models import ChatOpenAI
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
+from langchain.callbacks.human import HumanApprovalCallbackHandler
+from agent_tools import DataFetchingTool, EmailFetchingTool, EmailSenderApproval, EmailSendingTool
 import time
 
 load_dotenv()
 
 
-
-class DataFetchingTool(BaseTool):
-    name = "Workspace Data Fetcher"
-    description = ("use this tool to get data from the workspace also referred to as private data or company data")
-
-    def _run(self, query: str):
-        s3 = boto3.client('s3')
-        try:
-            s3.download_file('mailqa-bucket', 'all_texts.txt', "all_texts.txt")
-            print(f"File {'all_texts.txt'} downloaded successfully from {'mailqa-bucket'}")
-            with open('all_texts.txt', 'r') as file:
-                content = file.read()
-            return content
-        except Exception as e:
-            print(f"Error downloading {'all_texts.txt'} from {'mailqa-bucket'}: {e}")
-
-    def _arun(self, query: str):
-        raise NotImplementedError("This tool does not support async")
-
-class EmailFetchingTool(BaseTool):
-    name = "Email Data Fetcher"
-    description = ("use this tool to get a users email data and emails from his inbox")
-
-    def _run(self, query: str):
-        s3 = boto3.client('s3')
-        try:
-            s3.download_file('mailqa-bucket', 'emails.txt', "emails.txt")
-            print(f"File 'emails.txt' downloaded successfully from 'mailqa-bucket'")
-            with open('emails.txt', 'r') as file:
-                content = file.read()
-            return content
-        except Exception as e:
-            print(f"Error downloading 'emails.txt' from 'mailqa-bucket': {e}")
-
-    def _arun(self, query: str):
-        raise NotImplementedError("This tool does not support async")
-
-
-class EmailParserTool(BaseTool):
-    name = "Email Parser Tool"
-    description = "Use this tool to parse the email receiver, subject, and body from a given prompt."
-
-    def _run(self, query: str):
-        email_receiver = ""
-        subject = ""
-        body = ""
-        lines = prompt.split("\n")
-        for line in lines:
-            if line.startswith("To:"):
-                email_receiver = line.split(":")[1].strip()
-            elif line.startswith("Subject:"):
-                subject = line.split(":")[1].strip()
-            elif line.startswith("Body:"):
-                body = line.split(":")[1].strip()
-
-        return {
-            "email_receiver": email_receiver,
-            "subject": subject,
-            "body": body
-        }
-    
-    def _arun(self, query: str):
-        raise NotImplementedError("This tool does not support async")
-
-
-
-   
-class EmailSendingTool(BaseTool):
-    name = "Email Sender Tool"
-    description = ("Use this tool to send an email on behalf of the user")
-
-    def _run(self, query:str):
-        load_dotenv()
-        email_parser_tool = EmailParserTool()
-        parsed_data = email_parser_tool.run(prompt)
-        email_receiver = parsed_data["email_receiver"]
-        subject = parsed_data["subject"]
-        body = parsed_data["body"]
-        email_sender = "keviinkibe@gmail.com"
-        email_password = os.getenv('email_password')
-        em = EmailMessage()
-        em['From'] = email_sender
-        em['To'] = email_receiver
-        em['Subject'] = subject
-        em.set_content(body)
-        context = ssl.create_default_context()
-
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-            smtp.login(email_sender, email_password)
-            smtp.sendmail(email_sender, email_receiver, em.as_string())
-        return em 
-    
-    def _arun(self, query: str):
-        raise NotImplementedError("This tool does not support async")
-    
-
+                                  
 class Agent:
     def __init__(self):
         self.openai_api_key = os.getenv('OPENAI_API_KEY')
@@ -124,25 +28,33 @@ class Agent:
             k=5,
             return_messages=True
         )
-
+        checker = EmailSenderApproval()
+        callbacks = [HumanApprovalCallbackHandler(should_check=checker.should_check, approve=checker.approve)]
         self.data_fetching_tool = DataFetchingTool()
         self.email_fetching_tool = EmailFetchingTool()
-        self.email_sending_tool = EmailSendingTool()
+        self.email_sending_tool = EmailSendingTool(callbacks=callbacks)
         self.tools = [self.email_fetching_tool,self.data_fetching_tool, self.email_sending_tool]
 
-        self.sys_msg = """You are an assistant, assisting with email and workspace related information and tasks based on provided questions and context. 
-                    The user is part of a company and you have access to the company's data and the user's emails.
-                    You are moderately talkative and do not give short answers
-                    If you can't answer a question, request more information. 
+        self.sys_msg = """You are an assistant, assisting with email and workspace related information and 
+                        based on provided questions and context. 
+                        The user is part of a company and you have access to the company's data using the Company Data Fetcher tool and the user's emails using the Email Data Fetcher.
+                        You do not send emails to @example.com extensions ask for the specific email or look in the inbox.
+                        You are very talkative and do not give short answers
+                        If you can't answer a question, request more information. 
+
                     """
-        # self.agent = initialize_agent(
-        #         self.tools, self.llm, agent=AgentType.STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION , verbose=True
-        #         )
-
-
+                        # Strictly use this input for Company Data Fetcher tool and Email Data Fetcher tool
+                        # {
+                        #     "action": "Tool",
+                        #     "action_input": "the action"
+                        # }
+        self.conversational_memory = ConversationBufferWindowMemory(
+            memory_key='chat_history',
+            k=5,
+            return_messages=True
+            )
         self.agent = initialize_agent(
-            agent = 'chat_zero_shot_react_description',
-            # agent='structured-chat-zero-shot-react-description',
+            agent = "chat-conversational-react-description",
             tools=self.tools,
             llm=self.llm,
             verbose=True,
@@ -162,8 +74,12 @@ class Agent:
         return response
 
 
-if __name__ == "__main__":
-    chat_assistant = Agent()
-    prompt = input(">>>")
-    resp = chat_assistant.run(prompt)
-    print(resp)
+# if __name__ == "__main__":
+#     chat_assistant = Agent()
+#     prompt = input(">>>")
+#     start_time = time.time()
+#     resp = chat_assistant.run(prompt)
+#     end_time = time.time()
+#     duration = end_time - start_time
+#     print(resp)
+#     print(duration)

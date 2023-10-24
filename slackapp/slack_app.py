@@ -79,9 +79,11 @@ def handle_message(event, say):
         start_time = time.time()
         user_input = message
         response = agent.run(user_input) 
-        say(f"{response}")
         end_time = time.time()
         duration = end_time - start_time
+        say(f"{response}")
+        say(f"{duration}")
+        
         print(duration)
 
 if __name__ == "__main__":
