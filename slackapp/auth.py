@@ -2,7 +2,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
 # If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
+SCOPES = ['https://www.googleapis.com/auth/gmail.readonly', 'https://www.googleapis.com/auth/calendar']
 
 
 def authenticate():
@@ -21,11 +21,11 @@ def authenticate():
 def run_authentication_flow():
     """Run the OAuth 2.0 authentication flow to get new credentials."""
     flow = InstalledAppFlow.from_client_secrets_file(
-        'credentials.json',
+        'cred.json',
         scopes=SCOPES,
-        redirect_uri='https://localhost:8080'
+        redirect_uri='https://localhost:8050'
     )
 
-    flow.run_local_server(port=8080, prompt='consent', authorization_prompt_message='')
+    flow.run_local_server(port=8050, prompt='consent', authorization_prompt_message='')
 
     return flow.credentials

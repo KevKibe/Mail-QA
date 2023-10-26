@@ -72,19 +72,16 @@ def handle_message(event, say):
     check_email_and_authenticate(email, supabase_client)
 
     if channel_type == 'im':      
-        # access_token = fetch_access_token(email)
-        
-        # chatbot = ConversationChain(access_token)
         agent = Agent()
         start_time = time.time()
-        user_input = message
-        response = agent.run(user_input) 
+        user_input = email + " " + message 
+        response = agent.run(user_input)
+        say(f"{email}")          
+        say(f"{response}")
         end_time = time.time()
         duration = end_time - start_time
-        say(f"{response}")
         say(f"{duration}")
         
-        print(duration)
 
 if __name__ == "__main__":
     SocketModeHandler(app, os.environ["slack_app_token"]).start()

@@ -1,12 +1,24 @@
 import os
 import boto3
 import ssl
+import json
+import datetime
 import smtplib
+import pytz
 from email.message import EmailMessage
+from pydantic import BaseModel
+from datetime import timedelta
+# from langchain.agents.utils import SingleInputToolMixin
 from dotenv import load_dotenv
 from langchain.tools import BaseTool
-
+from googleapiclient.discovery import build
+from google.oauth2.credentials import Credentials
+from supabase import create_client
 load_dotenv()
+
+nairobi = pytz.timezone('Africa/Nairobi')
+nairobi_time = datetime.datetime.now(nairobi)
+
 
 
 class DataFetchingTool(BaseTool):
@@ -14,14 +26,9 @@ class DataFetchingTool(BaseTool):
     description = '''
                   The Company Data Fetcher is a powerful tool designed to retrieve data from the workspace, including private or company-specific data. With this tool, you can seamlessly access and fetch data stored within the workspace environment. 
                   It provides a secure and efficient way to retrieve data, ensuring the confidentiality and integrity of sensitive information. Whether you need to extract text files, documents, or other data types, the Workspace Data Fetcher simplifies the process, allowing you to effortlessly retrieve the desired data for further analysis, processing, or integration with other tools and systems.
-
+                  If there is no company data related to the query say that there is no data related to the question and ask for more information.
+                  The action input for this tool should strictly be a string.
                   '''
-                        #         The action input for this tool should strictly be
-                        # {
-                        #     "action": "Company Data Fetcher",
-                        #     "action_input": "the action"
-                        # }
-
     def _run(self, query: str):
         s3 = boto3.client('s3')
         try:
@@ -37,52 +44,53 @@ class DataFetchingTool(BaseTool):
         raise NotImplementedError("This tool does not support async")
     
 
+
 class EmailFetchingTool(BaseTool):
     name = "Email Data Fetcher"
     description = '''
-                The Email Data Fetcher is a tool specifically designed to retrieve a user's email data, including emails from their inbox. With this tool, agents can seamlessly access and fetch email data stored within the designated environment. 
-                It provides a secure and efficient way to retrieve emails, ensuring the privacy and confidentiality of the user's email communications. 
-                By using the Email Data Fetcher, agents can effortlessly retrieve email content, such as subject lines, message bodies, and attachments, for further analysis, processing, or integration with other tools and systems.
-
+                The Email Data Fetcher is a tool specifically designed to retrieve a user's email data, including emails from their inbox. 
+                When asked about a specific email return every information about the email, if there is no email related to the query say that there is no email related to the question and ask for more information.
+                The action input for this tool should always include the following parameters:
+                  - 'user_email': The user's email address that is in the prompt.
                '''
-                    # The action input for this tool should strictly be
-                    #     {
-                    #         "action": "Email Data Fetcher",
-                    #         "action_input": ""
-                    #     }
-
-    def _run(self, query: str):
+    def _run(self, **action_input):
+        email = action_input.get('user_email')
         s3 = boto3.client('s3')
         try:
-            s3.download_file('mailqa-bucket-01', 'emails.txt', "emails.txt")
-            print(f"File 'emails.txt' downloaded successfully from 'mailqa-bucket-01'")
-            with open('emails.txt', 'r') as file:
+            s3.download_file('mailqa-bucket-01', f'{email}_emails.txt', f"{email}_emails.txt")
+            print(f"File f'{email}_emails.txt' downloaded successfully from 'mailqa-bucket-01'")
+            with open(f'{email}_emails.txt', 'r') as file:
                 content = file.read()
             return content
         except Exception as e:
-            print(f"Error downloading 'emails.txt' from 'mailqa-bucket-01': {e}")
+            print(f"Error downloading f'{email}_emails.txt' from 'mailqa-bucket-01': {e}")
 
     def _arun(self, query: str):
         raise NotImplementedError("This tool does not support async")
 
-   
+
+    
 class EmailSendingTool(BaseTool):
     name = "Email Sender Tool"
-    description = '''Use this tool to send an email on behalf of the user, if told to send data from 
+    description  = '''Use this tool to send an email on behalf of the user, if told to send data from 
                    somewhere look in the Data Fetcher Tool or the Email Fetcher Tool
                    Do not send an email if it is to @example.com.
                    The action input for this tool should always include the following parameters:
                    - 'to': The email address of the recipient.
                    - 'subject': The subject of the email.
                    - 'body': The body content of the email.
+                   - 'email_sender': The user's email address that is in the prompt.
+                   In the "Best regards' part at the end, use the first part of the email of the sender. 
+                   After using the tool say return a confirmation of the email sending, eho its been sent to and the content of the email.
+                   Finish the chain after observing that the email(s) has been sent.
                    '''
 
-    def _run(self, **action_input):
+    def _run(self,**action_input):
         load_dotenv()
         email_receiver = action_input.get('to')
         subject = action_input.get('subject')
         body = action_input.get('body')
-        email_sender = "keviinkibe@gmail.com"
+        email_sender = action_input.get('email_sender')
         email_password = os.getenv('email_password')
         em = EmailMessage()
         em['From'] = email_sender
@@ -98,14 +106,100 @@ class EmailSendingTool(BaseTool):
     
     def _arun(self, query: str):
         raise NotImplementedError("This tool does not support async")
+
+class CalenderFetchingTool(BaseTool):
+    name = "Calender Events Fetcher"
+    description = '''
+                  The Calender Events Fetcher is a powerful tool designed to retrieve calender events in the user's calender. 
+                  The action input for this tool should always include the following parameters:
+                  - 'user_email': The user's email address that is in the prompt.
+                  '''
+    def _run(self, **action_input):
+       email = action_input.get('user_email')
+       supabase_url = os.getenv('SUPABASE_URL')
+       supabase_key = os.getenv('SUPABASE_KEY')
+       supabase_client = create_client(supabase_url, supabase_key)
+       max_results = 10
+       access_token = supabase_client.table('slack_app').select('accesstoken').eq('email', email).single().execute()
+       access_token_data = access_token.data  # Extract the JSON data
+       token_data = json.loads(access_token_data['accesstoken'])
+       credentials = Credentials.from_authorized_user_info(token_data)
+       service = build('calendar', 'v3', credentials=credentials)
+       nairobi = pytz.timezone('Africa/Nairobi')
+       now = datetime.datetime.now(nairobi)
+       now = now.isoformat()
+       events_list = []
+       try:
+           events_result = service.events().list(calendarId='primary', timeMin=now,
+                                          maxResults=max_results, singleEvents=True,
+                                          orderBy='startTime').execute()
+           events = events_result.get('items', [])
+
+           if not events:
+               return 'No upcoming events found.'
+           else:
+               for event in events:
+                   start = event['start'].get('dateTime', event['start'].get('date'))
+                   summary = event['summary']
+                   events_list.append((start, summary))
+                
+           return events_list
+       except Exception as error:
+           return f'An error occurred: {error}'
+
+
+    def _arun(self, query: str):
+        raise NotImplementedError("This tool does not support async")
     
 
-class EmailSenderApproval:
-    def should_check(self, serialized_obj):
-        return serialized_obj.get("name") == "Email Sender Tool"
+class EventSchedulingTool(BaseTool):
+    name = "Calender Event Scheduler"
+    description = f'''
+                  The Calender Events Scheduler is a powerful tool designed to schedule calender events in the user's calender. 
+                  Today's date and time is {nairobi_time}.
+                  Strictly the action input for this tool should always include the following parameters:
+                   - 'summary': str - The summary of the event.
+                   - 'year': int - The year of the start time of the event.Default is 2023.
+                   - 'month': int - The month the event is to start .
+                   - 'day': int - The day the event is to start.
+                   - 'hour': int - The hour the event is to start.
+                   - 'duration': int - How long the event is to take in hours, default is 1 hr. 
+                   - 'attendees': str - Emails of attendees of the event created. If is is not specified send an empty list. Make it a list if there is more than one attendee. 
+                   - 'user_email':str - The user's email address that is in the prompt.
+                  '''
+    def _run(self, **action_input):
+       summary = action_input.get('summary')
+       year = action_input.get('year')
+       month = action_input.get('month')
+       day = action_input.get('day')
+       hour = action_input.get('hour')
+       duration = action_input.get('duration')
+       attendees = action_input.get('attendees')
+       email = action_input.get('user_email')
+       start_time = datetime.datetime(year = year, month = month, day = day, hour = hour)
+       end_time = start_time + timedelta(hours = duration)
+       supabase_url = os.getenv('SUPABASE_URL')
+       supabase_key = os.getenv('SUPABASE_KEY')
+       supabase_client = create_client(supabase_url, supabase_key)
+       access_token = supabase_client.table('slack_app').select('accesstoken').eq('email', email).single().execute()
+       access_token_data = access_token.data  # Extract the JSON data
+       token_data = json.loads(access_token_data['accesstoken'])
+       credentials = Credentials.from_authorized_user_info(token_data)
+       service = build('calendar', 'v3', credentials=credentials)
+       event = {
+           'summary': summary,
+           'start': {
+               'dateTime': start_time.isoformat(),
+               'timeZone': 'Africa/Nairobi',
+           },
+           'end': {
+               'dateTime': end_time.isoformat(),
+               'timeZone': 'Africa/Nairobi',
+           },
+        'attendees': [{'email': attendee} for attendee in attendees],
+       }
+       event = service.events().insert(calendarId='primary', body=event).execute()
+       return print(f"Event created: {event['htmlLink']}")
 
-    def approve(self, input_str):
-        # Prompt the user to approve the input and return a boolean value
-        response = input(f"Do you approve of the following email to be sent? {input_str} (Y/N): ")
-        return response.lower() in ["y", "yes"]
-
+    def _arun(self, query: str):
+        raise NotImplementedError("This tool does not support async")

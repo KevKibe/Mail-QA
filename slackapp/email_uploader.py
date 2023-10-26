@@ -31,7 +31,7 @@ class EmailUploader:
         """Fetching and preprocesses the emails."""
         text_processor = TextProcessor()
         gmail_api = GmailAPI(self.access_token)
-        email_data_list = gmail_api.get_emails(1)
+        email_data_list = gmail_api.get_emails(7)
         processed_data = []
 
         for email_data in email_data_list:
@@ -55,9 +55,9 @@ class EmailUploader:
     def process_emails_continuously(self):
         while True:
             txt = self.preprocess_emails()
-            with open("emails.txt", "w") as f:
+            with open(f"{self.email}_emails.txt", "w") as f:
                 f.write(txt)
-            self.upload_to_s3("emails.txt", "mailqa-bucket-01")
+            self.upload_to_s3(f"{self.email}_emails.txt", "mailqa-bucket-01")
             time.sleep(5)  
 
 email_processor = EmailUploader("keviinkibe@gmail.com")
