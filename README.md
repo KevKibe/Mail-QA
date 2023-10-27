@@ -35,6 +35,13 @@
 
 ![image](https://github.com/KevKibe/Mail-QA/assets/86055894/03148eb9-751f-4b99-8196-42f64712f40b)
 
+![image](https://github.com/KevKibe/Mail-QA/assets/86055894/f5692f3d-15fa-41da-8047-622537339acf)
+
+![image](https://github.com/KevKibe/Mail-QA/assets/86055894/f1949e2e-138c-4b8f-83d6-b069eda4ee71)
+
+![image](https://github.com/KevKibe/Mail-QA/assets/86055894/1aaedb90-52c4-488e-aa2c-2eb672a77f8a)
+
+
 
 ## License
 This repository is licensed under [MIT License](https://github.com/KevKibe/Mail-QA/edit/main/LICENSE)
