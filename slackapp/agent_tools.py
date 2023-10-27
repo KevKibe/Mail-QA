@@ -6,9 +6,9 @@ import datetime
 import smtplib
 import pytz
 from email.message import EmailMessage
+# from email_chain import ConversationChain
 from pydantic import BaseModel
 from datetime import timedelta
-# from langchain.agents.utils import SingleInputToolMixin
 from dotenv import load_dotenv
 from langchain.tools import BaseTool
 from googleapiclient.discovery import build
@@ -45,6 +45,28 @@ class DataFetchingTool(BaseTool):
     
 
 
+# class EmailFetchingTool(BaseTool):
+#     name = "Email Data Fetcher"
+#     description = f'''
+#                 The Email Data Fetcher is a tool specifically designed to retrieve a user's email data, including emails from their inbox. 
+#                 Today's date and time is {nairobi_time}.
+#                 What is returned is updated recent emails in my inbox so you have access to my emails.
+#                 When asked for emails in the inbox give a summary of the emails and their content.
+#                 When asked about a specific email return every information about the email, if there is no email related to the query say that there is no email related to the question and ask for more information.
+#                 The action input for this tool should always include the following parameters:
+#                   - 'user_email': The user's email address that is in the prompt.
+#                   - 'query': What you want to find out from the emails.
+#                '''
+#     def _run(self, **action_input):
+#         email = action_input.get('user_email')
+#         query = action_input.get('query')
+#         convo = ConversationChain(email)
+#         response = convo.run(query)
+#         return response
+    
+#     def _arun(self, query: str):
+#         raise NotImplementedError("This tool does not support async")
+
 class EmailFetchingTool(BaseTool):
     name = "Email Data Fetcher"
     description = '''
@@ -67,22 +89,22 @@ class EmailFetchingTool(BaseTool):
 
     def _arun(self, query: str):
         raise NotImplementedError("This tool does not support async")
-
-
     
 class EmailSendingTool(BaseTool):
     name = "Email Sender Tool"
     description  = '''Use this tool to send an email on behalf of the user, if told to send data from 
                    somewhere look in the Data Fetcher Tool or the Email Fetcher Tool
                    Do not send an email if it is to @example.com.
-                   The action input for this tool should always include the following parameters:
-                   - 'to': The email address of the recipient.
-                   - 'subject': The subject of the email.
-                   - 'body': The body content of the email.
-                   - 'email_sender': The user's email address that is in the prompt.
-                   In the "Best regards' part at the end, use the first part of the email of the sender. 
+                   Strictly The action input for this tool should always include the following parameters:
+                   - 'to': str - The email address of the recipient always.
+                   - 'subject': str - The subject of the email always.
+                   - 'body': str - The body content of the email always.
+                   - 'email_sender': str - The user's email address that is the email address in the prompt always.
+                   End the email with just the words 'Best Regards' and space it accordingly. 
                    After using the tool say return a confirmation of the email sending, eho its been sent to and the content of the email.
                    Finish the chain after observing that the email(s) has been sent.
+                   Return the content of the email sent.
+                   Avoid saying 'The response to your last comment is:', replace with the email sent is...
                    '''
 
     def _run(self,**action_input):
@@ -199,7 +221,8 @@ class EventSchedulingTool(BaseTool):
         'attendees': [{'email': attendee} for attendee in attendees],
        }
        event = service.events().insert(calendarId='primary', body=event).execute()
-       return print(f"Event created: {event['htmlLink']}")
+    #    return print(f"Event created: {event['htmlLink']}")
+       return event['htmlLink']
 
     def _arun(self, query: str):
         raise NotImplementedError("This tool does not support async")

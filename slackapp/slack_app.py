@@ -1,5 +1,4 @@
 import os
-from slack_convo import ConversationChain
 from agent import Agent
 import time
 from auth import authenticate
@@ -76,7 +75,6 @@ def handle_message(event, say):
         start_time = time.time()
         user_input = email + " " + message 
         response = agent.run(user_input)
-        say(f"{email}")          
         say(f"{response}")
         end_time = time.time()
         duration = end_time - start_time

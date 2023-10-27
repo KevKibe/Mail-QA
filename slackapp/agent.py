@@ -36,7 +36,7 @@ class Agent:
         self.callbacks = [HumanApprovalCallbackHandler(should_check=checker.should_check, approve=checker.approve)]
         self.data_fetching_tool = DataFetchingTool()
         self.email_fetching_tool = EmailFetchingTool()
-        self.email_sending_tool = EmailSendingTool(callbacks = self.callbacks)
+        self.email_sending_tool = EmailSendingTool()
         self.calender_fetching_tool = CalenderFetchingTool()
         self.event_scheduling_tool = EventSchedulingTool()
         self.tools = [self.email_fetching_tool,self.data_fetching_tool, self.email_sending_tool, self.calender_fetching_tool, self.event_scheduling_tool]
@@ -50,6 +50,7 @@ class Agent:
                         Strictly do not give a response that starts with "The response to your last comment"  
                         After observing that an email has been sent finish the chain.
                         The email address in the question is the user's email address use that in the tools.
+                        When a user asks what email they got an a certain day, use the Email Data Fetcher.
                     """
 
         self.conversational_memory = ConversationBufferWindowMemory(
@@ -81,13 +82,13 @@ class Agent:
         return response
 
 
-if __name__ == "__main__":
-    email = "keviinkibe@gmail.com"
-    chat_assistant = Agent()
-    prompt = input(">>>")
-    start_time = time.time()
-    resp = chat_assistant.run(email + " " +prompt)
-    end_time = time.time()
-    duration = end_time - start_time
-    print(resp)
-    print(duration)
+# if __name__ == "__main__":
+#     email = "keviinkibe@gmail.com"
+#     chat_assistant = Agent()
+#     prompt = input(">>>")
+#     start_time = time.time()
+#     resp = chat_assistant.run(email + " " +prompt)
+#     end_time = time.time()
+#     duration = end_time - start_time
+#     print(resp)
+#     print(duration)
