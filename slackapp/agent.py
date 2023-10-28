@@ -83,13 +83,3 @@ class Agent:
         return response
 
 
-# if __name__ == "__main__":
-#     email = "keviinkibe@gmail.com"
-#     chat_assistant = Agent()
-#     prompt = input(">>>")
-#     start_time = time.time()
-#     resp = chat_assistant.run(email + " " +prompt)
-#     end_time = time.time()
-#     duration = end_time - start_time
-#     print(resp)
-#     print(duration)

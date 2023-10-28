@@ -147,8 +147,8 @@ class CalenderFetchingTool(BaseTool):
        events_list = []
        try:
            events_result = service.events().list(calendarId='primary', timeMin=now,
-                                        maxResults=max_results, singleEvents=True,
-                                        orderBy='startTime').execute()
+                                          maxResults=max_results, singleEvents=True,
+                                          orderBy='startTime').execute()
            events = events_result.get('items', [])
 
            if not events:
@@ -157,8 +157,7 @@ class CalenderFetchingTool(BaseTool):
                for event in events:
                    start = event['start'].get('dateTime', event['start'].get('date'))
                    summary = event['summary']
-                   link = event['htmlLink']  
-                   events_list.append((summary, start,link))  
+                   events_list.append((start, summary))
                 
            return events_list
        except Exception as error:
