@@ -71,7 +71,7 @@ class ConversationChain:
         text_splitter = CharacterTextSplitter(separator="\n", chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         for dat in data:
             text_chunks = text_splitter.split_text(dat)
-            vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
+            vectorstore = FAISS.from_texts(texts=text_chunks, embedding=cached_embedder)
             return vectorstore
 
     def initialize_conversation_chain(self, vectorstore):
@@ -90,7 +90,7 @@ class ConversationChain:
         memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
         conversation_chain = RetrievalQA.from_chain_type(
             llm=llm,
-            chain_type_kwargs={"prompt": prompt_template},
+            # chain_type_kwargs={"prompt": prompt_template},
             memory=memory,
             retriever=vectorstore.as_retriever()
         )
@@ -105,11 +105,11 @@ class ConversationChain:
         return conversation_chain.run(user_input)
         # return data
         
-# con = ConversationChain("keviinkibe@gmail.com")
-# prompt = input('>>')
-# start_time = time.time()
-# run = con.run(prompt)
-# end_time = time.time()
-# print(run)
-# duration = end_time-start_time
-# print(duration)
+con = ConversationChain("keviinkibe@gmail.com")
+prompt = input('>>')
+start_time = time.time()
+run = con.run(prompt)
+end_time = time.time()
+print(run)
+duration = end_time-start_time
+print(duration)

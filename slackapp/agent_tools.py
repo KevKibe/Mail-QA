@@ -6,7 +6,8 @@ import datetime
 import smtplib
 import pytz
 from email.message import EmailMessage
-# from email_chain import ConversationChain
+from mail_fetch import GmailAPI
+from mail_preprocess import TextProcessor
 from pydantic import BaseModel
 from datetime import timedelta
 from dotenv import load_dotenv
@@ -45,50 +46,62 @@ class DataFetchingTool(BaseTool):
     
 
 
-# class EmailFetchingTool(BaseTool):
-#     name = "Email Data Fetcher"
-#     description = f'''
-#                 The Email Data Fetcher is a tool specifically designed to retrieve a user's email data, including emails from their inbox. 
-#                 Today's date and time is {nairobi_time}.
-#                 What is returned is updated recent emails in my inbox so you have access to my emails.
-#                 When asked for emails in the inbox give a summary of the emails and their content.
-#                 When asked about a specific email return every information about the email, if there is no email related to the query say that there is no email related to the question and ask for more information.
-#                 The action input for this tool should always include the following parameters:
-#                   - 'user_email': The user's email address that is in the prompt.
-#                   - 'query': What you want to find out from the emails.
-#                '''
-#     def _run(self, **action_input):
-#         email = action_input.get('user_email')
-#         query = action_input.get('query')
-#         convo = ConversationChain(email)
-#         response = convo.run(query)
-#         return response
-    
-#     def _arun(self, query: str):
-#         raise NotImplementedError("This tool does not support async")
 
 class EmailFetchingTool(BaseTool):
     name = "Email Data Fetcher"
-    description = '''
+    description = f'''
                 The Email Data Fetcher is a tool specifically designed to retrieve a user's email data, including emails from their inbox. 
+                Today's date and time is {nairobi_time}.
+                What is returned is updated recent emails in my inbox so you have access to my emails.
+                When asked for emails in the inbox give a summary of the emails and their content.
                 When asked about a specific email return every information about the email, if there is no email related to the query say that there is no email related to the question and ask for more information.
                 The action input for this tool should always include the following parameters:
                   - 'user_email': The user's email address that is in the prompt.
                '''
     def _run(self, **action_input):
         email = action_input.get('user_email')
-        s3 = boto3.client('s3')
-        try:
-            s3.download_file('mailqa-bucket-01', f'{email}_emails.txt', f"{email}_emails.txt")
-            print(f"File f'{email}_emails.txt' downloaded successfully from 'mailqa-bucket-01'")
-            with open(f'{email}_emails.txt', 'r') as file:
-                content = file.read()
-            return content
-        except Exception as e:
-            print(f"Error downloading f'{email}_emails.txt' from 'mailqa-bucket-01': {e}")
-
+        supabase_url = os.getenv('SUPABASE_URL')
+        supabase_key = os.getenv('SUPABASE_KEY')
+        supabase_client = create_client(supabase_url, supabase_key)
+        access_token = supabase_client.table('slack_app').select('accesstoken').eq('email', email).single().execute()
+        access_token = access_token.data['accesstoken']
+        
+        text_processor = TextProcessor()
+        gmail_api = GmailAPI(access_token)
+        email_data_list = gmail_api.get_emails(7)
+        processed_data = []
+        for email_data in email_data_list:
+            processed_email_data = text_processor.preprocess_email_data(email_data)
+            processed_data.append(str(processed_email_data))
+        data = ' '.join(processed_data)
+        return data
+    
     def _arun(self, query: str):
         raise NotImplementedError("This tool does not support async")
+
+# class EmailFetchingTool(BaseTool):
+#     name = "Email Data Fetcher"
+#     description = '''
+#                 The Email Data Fetcher is a tool specifically designed to retrieve a user's email data, including emails from their inbox. 
+#                 When asked about a specific email return every information about the email, if there is no email related to the query say that there is no email related to the question and ask for more information.
+#                 The action input for this tool should always include the following parameters:
+#                   - 'user_email': The user's email address that is in the prompt.
+#                 When a query is about sending an email strictly do not execute this Email Data Fetcher tool.
+#                '''
+#     def _run(self, **action_input):
+#         email = action_input.get('user_email')
+#         s3 = boto3.client('s3')
+#         try:
+#             s3.download_file('mailqa-bucket-01', f'{email}_emails.txt', f"{email}_emails.txt")
+#             print(f"File f'{email}_emails.txt' downloaded successfully from 'mailqa-bucket-01'")
+#             with open(f'{email}_emails.txt', 'r') as file:
+#                 content = file.read()
+#             return content
+#         except Exception as e:
+#             print(f"Error downloading f'{email}_emails.txt' from 'mailqa-bucket-01': {e}")
+
+#     def _arun(self, query: str):
+#         raise NotImplementedError("This tool does not support async")
     
 class EmailSendingTool(BaseTool):
     name = "Email Sender Tool"
@@ -96,15 +109,17 @@ class EmailSendingTool(BaseTool):
                    somewhere look in the Data Fetcher Tool or the Email Fetcher Tool
                    Do not send an email if it is to @example.com.
                    Strictly The action input for this tool should always include the following parameters:
+                   - 'email_sender': str - The user's email address that is the email address in the prompt always.
                    - 'to': str - The email address of the recipient always.
                    - 'subject': str - The subject of the email always.
                    - 'body': str - The body content of the email always.
-                   - 'email_sender': str - The user's email address that is the email address in the prompt always.
+                   
                    End the email with just the words 'Best Regards' and space it accordingly. 
                    After using the tool say return a confirmation of the email sending, eho its been sent to and the content of the email.
                    Finish the chain after observing that the email(s) has been sent.
-                   Return the content of the email sent.
-                   Avoid saying 'The response to your last comment is:', replace with the email sent is...
+                   Return the content of only that one email sent not more than that one.
+                   Strictly do not execute the Email Data Fetcher tool after using this tool just finish the chain.
+                   Avoid saying 'The response to your last comment is:', replace with the content of the email sent...
                    '''
 
     def _run(self,**action_input):
@@ -135,7 +150,8 @@ class CalenderFetchingTool(BaseTool):
                   The Calender Events Fetcher is a powerful tool designed to retrieve calender events in the user's calender. 
                   The action input for this tool should always include the following parameters:
                   - 'user_email': The user's email address that is in the prompt.
-                  '''
+                  Respond with the events and the links to the events
+                  ''' 
     def _run(self, **action_input):
        email = action_input.get('user_email')
        supabase_url = os.getenv('SUPABASE_URL')
@@ -143,7 +159,7 @@ class CalenderFetchingTool(BaseTool):
        supabase_client = create_client(supabase_url, supabase_key)
        max_results = 10
        access_token = supabase_client.table('slack_app').select('accesstoken').eq('email', email).single().execute()
-       access_token_data = access_token.data  # Extract the JSON data
+       access_token_data = access_token.data  
        token_data = json.loads(access_token_data['accesstoken'])
        credentials = Credentials.from_authorized_user_info(token_data)
        service = build('calendar', 'v3', credentials=credentials)
@@ -153,8 +169,8 @@ class CalenderFetchingTool(BaseTool):
        events_list = []
        try:
            events_result = service.events().list(calendarId='primary', timeMin=now,
-                                          maxResults=max_results, singleEvents=True,
-                                          orderBy='startTime').execute()
+                                        maxResults=max_results, singleEvents=True,
+                                        orderBy='startTime').execute()
            events = events_result.get('items', [])
 
            if not events:
@@ -163,16 +179,14 @@ class CalenderFetchingTool(BaseTool):
                for event in events:
                    start = event['start'].get('dateTime', event['start'].get('date'))
                    summary = event['summary']
-                   events_list.append((start, summary))
+                   link = event['htmlLink']  
+                   events_list.append((summary, start,link))  
                 
            return events_list
        except Exception as error:
            return f'An error occurred: {error}'
 
 
-    def _arun(self, query: str):
-        raise NotImplementedError("This tool does not support async")
-    
 
 class EventSchedulingTool(BaseTool):
     name = "Calender Event Scheduler"
