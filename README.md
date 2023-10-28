@@ -1,45 +1,45 @@
 
 # Mail-QA
-- Mail QA is an innovative chat-based platform, that utilizes the power of generative AI to provide users with effortless access to all their emails and files/company data shared in the workspace.
+- Mail QA is a **workspace assistant** that seamlessly integrates information retrieval, email management, and calendar scheduling into your workspace. 
 
 ## The Problem
-- From a report by [Mckinsey Global Institute](https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/the-social-economy), employees across various sectors reported spending an increasing amount of time sorting through emails and gathering information, leading to a noticeable decline in overall workplace productivity.
+- From a report by Mckinsey Global Institute, interaction workers spend:
+   - **28% of their workweek managing emails**
+   - **20% searching for internal information or colleagues to assist with tasks**
+- This significantly reduces employee productivity.
+
 
 ## Why we need to solve it?
-- Efficient email and company data management is crucial for boosting productivity, enhancing employee engagement, and improving work quality across diverse industries
- 
-- Addressing this inefficiency prevents valuable time diversion from critical tasks, reduces demotivation, and lowers turnover rates. 
-
-- The impact extends to sectors like healthcare, finance, education, and technology, where timely decision-making and operational efficiency are paramount.
-
+- By solving this problem we are unlocking Africa’s digital potential by:
+  - **Boosting Productivity:** Reducing time spent on emails and internal searches, freeing 48% of worker’s time.
+  - **Cost Efficiency:** Time saved translates into cost savings for businesses.
+  - **Investment Magnet:** Efficient teams attract more foreign investment, driving economic growth.
 
 ## Key Features
-- Instant access to user’s emails : Access all email content, retrieve unread emails, search for specific emails, summarize email threads, and generate responses using natural language prompts.
-- Instant access to data shared in the workspace: Access any pdf, word, txt document shared in the workspace using natural language prompts.
-- Multilingual support: Emails and files shared can be translated into 98 other languages supported by the OpenAI API useful for multi-region organizations. 
-- Multi-platform: Currently the app is available on Slack but will soon be available to users on Microsoft Teams offering the same functionality.
+- **Effortless Data Retrieval :** Use natural language prompts to effortlessly access and extract text data from any file format within your workspace, saving precious time and resources.
+
+- **Email Efficiency :** Effortlessly locate specific emails in your inbox using natural language prompts.
+
+- **Seamless Email Composing and Sending :** Users can send emails directly from the app using just a natural language prompt.
+
+- **Calendar Management :** Users can schedule and track meetings and events using natural language prompts in the app.
+
+- **Availability :** Since our app is built as an integration on Slack, it is available on Web, Mobile and Desktop.
 
 
 ## Screenshots
-![image](https://github.com/KevKibe/Mail-QA/assets/86055894/069c9c5d-b57e-4f02-96b8-f82884b2e50f)
+## Locating Emails from the User's Inbox
+<img width="1009" alt="image" src="https://github.com/KevKibe/Mail-QA/assets/86055894/dae1ad9f-2809-49bd-bf6c-67df04459f59">
 
-![image](https://github.com/KevKibe/Mail-QA/assets/86055894/f8a1c60e-40d9-4e4a-9a96-2878889c0941)
+## Information Retrieval from the Workspace
+<img width="1006" alt="image" src="https://github.com/KevKibe/Mail-QA/assets/86055894/d18d8fac-e700-4520-a833-f1c8abef60cc">
 
-![image](https://github.com/KevKibe/Mail-QA/assets/86055894/86e34262-1dcb-4d6d-97c3-7fae1c9148f4)
+## Calender Management
+<img width="982" alt="image" src="https://github.com/KevKibe/Mail-QA/assets/86055894/23773519-47b1-421a-9675-f4ec38bfe547">
+<img width="985" alt="image" src="https://github.com/KevKibe/Mail-QA/assets/86055894/1d5051b1-1f16-4a8d-b85e-9693739baffb">
 
-![image](https://github.com/KevKibe/Mail-QA/assets/86055894/e1f9c62e-9de6-4c5b-989d-5581ed0e5537)
-
-<img width="1012" alt="image" src="https://github.com/KevKibe/Mail-QA/assets/86055894/7a559904-fff2-4107-8a75-a6422ac66dbf">
-<img width="1011" alt="image" src="https://github.com/KevKibe/Mail-QA/assets/86055894/61a2507e-7b59-43a7-99a1-f4b65b15e7cf">
-<img width="1016" alt="image" src="https://github.com/KevKibe/Mail-QA/assets/86055894/ecd8aa3b-be8c-476e-8527-8fe8933876e5">
-
-![image](https://github.com/KevKibe/Mail-QA/assets/86055894/03148eb9-751f-4b99-8196-42f64712f40b)
-
-![image](https://github.com/KevKibe/Mail-QA/assets/86055894/f5692f3d-15fa-41da-8047-622537339acf)
-
-![image](https://github.com/KevKibe/Mail-QA/assets/86055894/f1949e2e-138c-4b8f-83d6-b069eda4ee71)
-
-![image](https://github.com/KevKibe/Mail-QA/assets/86055894/1aaedb90-52c4-488e-aa2c-2eb672a77f8a)
+## Email Composing and Sending 
+<img width="997" alt="image" src="https://github.com/KevKibe/Mail-QA/assets/86055894/a21a0df1-bc34-4484-aad9-7e207b9af0ec">
 
 
 
