@@ -79,29 +79,7 @@ class EmailFetchingTool(BaseTool):
     def _arun(self, query: str):
         raise NotImplementedError("This tool does not support async")
 
-# class EmailFetchingTool(BaseTool):
-#     name = "Email Data Fetcher"
-#     description = '''
-#                 The Email Data Fetcher is a tool specifically designed to retrieve a user's email data, including emails from their inbox. 
-#                 When asked about a specific email return every information about the email, if there is no email related to the query say that there is no email related to the question and ask for more information.
-#                 The action input for this tool should always include the following parameters:
-#                   - 'user_email': The user's email address that is in the prompt.
-#                 When a query is about sending an email strictly do not execute this Email Data Fetcher tool.
-#                '''
-#     def _run(self, **action_input):
-#         email = action_input.get('user_email')
-#         s3 = boto3.client('s3')
-#         try:
-#             s3.download_file('mailqa-bucket-01', f'{email}_emails.txt', f"{email}_emails.txt")
-#             print(f"File f'{email}_emails.txt' downloaded successfully from 'mailqa-bucket-01'")
-#             with open(f'{email}_emails.txt', 'r') as file:
-#                 content = file.read()
-#             return content
-#         except Exception as e:
-#             print(f"Error downloading f'{email}_emails.txt' from 'mailqa-bucket-01': {e}")
 
-#     def _arun(self, query: str):
-#         raise NotImplementedError("This tool does not support async")
     
 class EmailSendingTool(BaseTool):
     name = "Email Sender Tool"
