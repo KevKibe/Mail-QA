@@ -36,3 +36,5 @@ slackapp/venv
 .env
 slackapp/all_texts.txt
 slackapp/emails.txt
+
+API
