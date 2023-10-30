@@ -47,35 +47,11 @@ function Navbar() {
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav ml-auto">
-          <li className="nav-item">
-            <a className="nav-link" href="/">
-              Home
-            </a>
-          </li>
-          {!isLoggedIn && (
             <li className="nav-item">
-              <a className="nav-link" href="/signup">
-                Signup
+              <a className="nav-link" href="https://join.slack.com/t/digital-dynamos-group/shared_invite/zt-2609f7b1w-zVJylghjkdyDCucv_U~EXw">
+                Home
               </a>
             </li>
-          )}
-          {!isLoggedIn && (
-            <li className="nav-item">
-              <a className="nav-link" href="/login">
-                Login
-              </a>
-            </li>
-          )}
-          <li className="nav-item">
-            <a className="nav-link" href="/prompt">
-              Prompt
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link">
-              {userinfo ? (userinfo.name ? 'Online' : 'Offline') : 'Loading..'}
-            </a>
-          </li>
         </ul>
       </div>
     </nav>
