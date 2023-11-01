@@ -5,6 +5,7 @@ import json
 import datetime
 import smtplib
 import pytz
+import postgrest.exceptions
 from email.message import EmailMessage
 from mail_fetch import GmailAPI
 from mail_preprocess import TextProcessor
@@ -106,7 +107,12 @@ class EmailSendingTool(BaseTool):
         subject = action_input.get('subject')
         body = action_input.get('body')
         email_sender = action_input.get('email_sender')
-        email_password = os.getenv('email_password')
+        supabase_url = os.getenv('SUPABASE_URL')
+        supabase_key = os.getenv('SUPABASE_KEY')
+        supabase_client = create_client(supabase_url, supabase_key)
+        # email_password = os.getenv('email_password')
+        email_password = supabase_client.table('slack_app').select('app_passwords').eq('email', email_sender).single().execute()
+
         em = EmailMessage()
         em['From'] = email_sender
         em['To'] = email_receiver
@@ -114,10 +120,15 @@ class EmailSendingTool(BaseTool):
         em.set_content(body)
         context = ssl.create_default_context()
 
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-            smtp.login(email_sender, email_password)
-            smtp.sendmail(email_sender, email_receiver, em.as_string())
-        return em 
+        try:
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+                smtp.login(email_sender, email_password)
+                smtp.sendmail(email_sender, email_receiver, em.as_string())
+            return em
+        except smtplib.SMTPAuthenticationError:
+            return "SMTPAuthenticationError occurred: Username and Password not accepted."
+        except Exception as e:
+            return f"An error occurred: {str(e)}"
     
     def _arun(self, query: str):
         raise NotImplementedError("This tool does not support async")

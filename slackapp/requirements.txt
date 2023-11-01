@@ -16,3 +16,4 @@ chromadb
 boto3
 pdfminer
 pytz
+streamlit

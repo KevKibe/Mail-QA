@@ -52,6 +52,7 @@ class Agent:
                         The email address in the question is the user's email address use that in the tools.
                         When a user asks what email they got an a certain day, use the Email Data Fetcher.
                         When a query is about sending an email strictly do not execute the Email Data Fetcher.
+                        when a user says hello or what do you do, do not use any tool, just provide an action input as a response
                     """
 
         self.conversational_memory = ConversationBufferWindowMemory(
