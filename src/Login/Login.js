@@ -1,6 +1,7 @@
 import React from 'react'
 import { GoogleLogin } from 'react-google-login';
 import Header from '../Header/Header';
+import './Login.css';
 function Login() {
     const responseGoogle = (response) => {
         console.log(response); // You can handle the response here
@@ -8,7 +9,7 @@ function Login() {
         if (response.accessToken) {
           localStorage.setItem('accessToken', response.accessToken);
           localStorage.setItem('userProfile', JSON.stringify(response.profileObj));
-          window.location.href = '/prompt';
+          window.location.href = '/';
         }
       };
     
@@ -18,8 +19,6 @@ function Login() {
       }
   return (
     <>
-        <Header />
- 
         <main>
                 <div class="hero-img">
                         
@@ -31,13 +30,18 @@ function Login() {
                         <p class="txt-white">
                                 As you log in, know that you're not just accessing your account; you're stepping into a space where your experiences matter, and we acknowledge that
                         </p>
-                        <a href="#" class="btn-gradient">                <GoogleLogin
-                  clientId="965274681666-p08jm4et6g955b9fmm0jeirg410qcug4.apps.googleusercontent.com"
-                  buttonText="Sign In with Google"
-                  onSuccess={responseGoogle}
-                  onFailure={responseGoogle}
-                  cookiePolicy={'single_host_origin'}
-                /></a>
+                        <a href="#" class="btn-gradient">                
+<div class="google-login-container">
+  <GoogleLogin
+    clientId="992390497960-a6cuvp6kaf44en2v1ktu0r29hibj7bks.apps.googleusercontent.com"
+    buttonText="Sign In with Google"
+    onSuccess={responseGoogle}
+    onFailure={responseGoogle}
+    cookiePolicy={'single_host_origin'}
+  />
+</div>
+
+                </a>
                         <a href="#" class="txt-gradient">signup Instead</a>
 
                 </div>
