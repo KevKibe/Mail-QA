@@ -10,145 +10,108 @@ import oaImage from '../assets/img/oa.png';
 import slackImage from '../assets/img/slack.png';
 import supaImage from '../assets/img/supa.png';
 import mtImage from '../assets/img/mt.png';
-
+import emailCheckingVideo from '../assets/img/bg.gif';
+import devicesImage from '../assets/img/devices.png';
+import slackWorkspaceVideo from '../assets/img/email_checking.mp4';
 
 function Home() { 
   return (
     <>
-    <main>
-        <div className="hero-text"> 
-        <p style={{
-              color: 'white',
-            }}>
-                          <TypeWriter
-              words={["Clicking Through Emails and Workspace Data Was The Old Thing."]}
+      <main>
+        <div className="showcase">
+          <p className="txt-gradient-light" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            <TypeWriter
+              words={["Scanning through emails was the old thing"]}
               wait={1000000}
             />
-            </p>
+          </p>
 
-          <a href="https://join.slack.com/t/digital-dynamos-group/shared_invite/zt-2609f7b1w-zVJylghjkdyDCucv_U~EXw" className="btn-gradient">
-            Get Started
-          </a>
-        </div>
-        <div className="hero-img">
-          <img src={illImage} alt="" />
+          <small className="txt-white" data-aos="fade-up" data-aos-duration="800" data-aos-delay="700">
+            AI powered tool that helps you manage your emails using natural language prompts
+          </small>
+          <a href="#" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1000" className="btn-gradient-blue">Get Started</a>
         </div>
       </main>
 
-        <section>
-        <div
-          className="prompt-container"
-          data-aos="fade"
-          data-aos-duration="1100"
-          data-aos-delay="200"
-          data-aos-easing="ease-in"
-        >
-          <div className="query">
-            <div className="u">U</div>
-            <p style={{
-              color: 'white',
-            }}>
+      <section>
+        <h1 className="txt-gradient-light txt-light" data-aos="fade" data-aos-duration="1000">
+          All Your answers at a <span className="txt-gradient">prompt</span>
+        </h1>
+        <div className="container">
+          <div className="prompt-quiz" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            <p className="user">U</p>
+            <p className="quiz txt-gradient-light">
               <TypeWriter
-                words={["Summarize my unread emails"]}
+                words={["Could I get a summary of all hackathon emails today"]}
                 wait={1555500}
               />
             </p>
           </div>
 
-          <div className="response">
-            <img src={iconLogoImage} alt="" />
-            <p style={{
-              color: 'white',
-            }}>
+          <div className="response" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="800">
+            <p className="gpt" data-aos="fade" data-aos-duration="1000" data-aos-delay="200"><img src="./assets/img/iconlogo.png" alt="" /></p>
+            <p className="txt-gradient-light">
               <TypeWriter
                 words={[
-                  "Here is a summary \n\nSubject: You have an email confirming a scheduled meeting tomorrow, another email inviting you to a webinar by Google Africa and the last unread email an introduction by John Doe asking to collaborate on a project. The sender expresses enthusiasm about the potential contribution.\n\n",
+                  "Here is a summary of all emails with the keyword hackathon. Subject: Amazing Hackathon: On 12 NovSummary: The email highlights an upcoming hackathon scheduled for November 12th. It promises an exciting opportunity to showcase skills, collaborate, and solve real-world problems. The event emphasizes networking, prizes, and recognition. Recipients are encouraged to register, prepare, form teams, and get ready for a day of innovation. The sender expresses enthusiasm about the recipients potential contribution.Action Items:- Save the date: November 12th.- Register for the hackathon.- Prepare ideas and skills.- Consider forming or joining a team",
                 ]}
                 wait={155000}
               />
             </p>
-
           </div>
         </div>
+        <a href="#" className="btn-gradient-blue try" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">Give It a try</a>
 
-        <a
-          href="https://join.slack.com/t/digital-dynamos-group/shared_invite/zt-2609f7b1w-zVJylghjkdyDCucv_U~EXw"
-          className="btn-gradient"
-          data-aos="fade"
-          data-aos-duration="1000"
-          data-aos-delay="20"
-          data-aos-easing="ease-in"
-        >
-          Try it yourself
-        </a>
-        </section>
-
-
-      <section className="numbers">
-        <h2
-          className="txt-gradient"
-          data-aos="fade-up"
-          data-aos-duration="1000"
-          data-aos-delay="20"
-          data-aos-easing="ease-in"
-        >
-          According to a study by Mckinsey
-        </h2>
-        <h1
-          className="txt-white"
-          data-aos="fade-up"
-          data-aos-duration="1000"
-          data-aos-delay="400"
-          data-aos-easing="ease-in"
-        >
-          28 <span className="txt-gradient">%</span>
-        </h1>
-        <h3
-          className="txt-gradient"
-          data-aos="fade-up"
-          data-aos-duration="800"
-          data-aos-delay="450"
-          data-aos-easing="ease-in"
-        >
-          Of work time is spent clicking through emails
-        </h3>
       </section>
 
-      <section className="showcase">
-        <div className="grid-2">
-          <img
-            src={envelopeImage}
-            data-aos="fade-left"
-            data-aos-duration="800"
-            data-aos-delay="60"
-            data-aos-easing="ease-in"
-            alt=""
-            height="90%"
-          />
+      <section>
+      <h1 className="txt-gradient-light txt-light" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="0">
+        Also in your Slack workspace
+      </h1>
+      <video src={slackWorkspaceVideo} width="80%" autoPlay muted loop data-aos="zoom-out-up" data-aos-duration="1000" data-aos-delay="200"></video>
+    </section>
 
-          <div
-            className="text"
-            data-aos="fade-right"
-            data-aos-duration="800"
-            data-aos-delay="6"
-            data-aos-easing="ease-in"
-          >
-            <h1 className="txt-gradient">
-              Find What You Need and boost your productivity
-            </h1>
-
-            <p className="txt-white">
-              Say goodbye to wasted hours and hello to a productivity boost that
-              transforms the way you work. Reclaim your time and make the most
-              out of every email.
-            </p>
-
-            <a href="./signup" className="btn-gradient">
-              Register now
-            </a>
-          </div>
+      <section>
+      <h1 className="txt-light txt-gradient-light" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="200">
+        And That's Not All
+      </h1>
+      <div className="grid-container" data-aos="fade" data-aos-duration="100" data-aos-delay="20">
+        <div className="grid-item" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+          <p className="txt-gradient">Retrieve information shared within the workspace</p>
         </div>
-      </section>
+        <div className="grid-item" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">
+          <p className="txt-gradient">Obtain data accessible through Google searches.</p>
+        </div>
+        <div className="grid-item" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">
+          <p className="txt-gradient">Quickly find, compose and send emails</p>
+        </div>
+        <div className="grid-item" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+          <p className="txt-gradient">Schedule and track meetings and events</p>
+        </div>
+      </div>
+      <a href="#" className="btn-gradient-blue" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">
+        Sign up now
+      </a>
+    </section>
+
+
+      <section>
+      <h1 className="txt-gradient-light txt-light" data-aos="fade" data-aos-duration="1000">
+        Where do I use MailQA?
+      </h1>
+      <div className="grid" data-aos="zoom-in-up" data-aos-duration="1000" data-aos-delay="200">
+        <img src={devicesImage} alt="" />
+        <div className="text y-start x-start">
+          <h1 className="txt-gradient-light">It runs on just about anything</h1>
+          <small className="txt-white">
+            MailQA is accessible on all devices and platforms from your smartphone to your laptop to your iPad.
+          </small>
+          <a href="#" className="btn-gradient-blue">
+            Sign up now
+          </a>
+        </div>
+      </div>
+    </section>
 
       <section className="partners" >
         <h1

@@ -8,8 +8,10 @@ function Header() {
   return (
     <>
     <header>
-        <img src={logoImage} alt="" />
-        <nav>
+        <div class="logo">
+            <img src={logoImage} alt="" />
+        </div>
+
           <ul>
             <li>
               <a href="./">Home <span>/</span></a>
@@ -31,7 +33,6 @@ function Header() {
 
 
           </ul>
-        </nav>
       </header>
     </>
   )

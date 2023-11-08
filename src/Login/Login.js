@@ -1,7 +1,7 @@
 import React from 'react'
 import { GoogleLogin } from 'react-google-login';
-import Header from '../Header/Header';
 import './Login.css';
+import axios from 'axios';
 function Login() {
     const responseGoogle = (response) => {
         console.log(response); // You can handle the response here
@@ -9,7 +9,37 @@ function Login() {
         if (response.accessToken) {
           localStorage.setItem('accessToken', response.accessToken);
           localStorage.setItem('userProfile', JSON.stringify(response.profileObj));
-          window.location.href = '/';
+
+          const accessToken = localStorage.getItem('accessToken');
+          const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+
+          const dataToSend = {
+            accessToken: accessToken,
+            email: userProfile.email,
+            scopes: response.tokenObj.scope,
+            expiry: response.tokenObj.expires_at,
+            token_uri: response.token_uri,
+            client_id: response.client_id,
+            client_secret: response.client_secret,
+            refresh_token: userProfile.refresh_token,
+            special: response
+          };
+
+          const serverURL = 'http://localhost:8000/updatedatabase';
+
+          // Make a POST request to the server using Axios
+          axios.post(serverURL, dataToSend)
+            .then(response => {
+              // Handle the response from the server if needed
+              console.log('Data sent successfully:', response.data);
+            })
+            .catch(error => {
+              // Handle errors if the request fails
+              console.error('Error sending data:', error);
+            });
+
+
+          //window.location.href = '/';
         }
       };
     
@@ -38,6 +68,7 @@ function Login() {
     onSuccess={responseGoogle}
     onFailure={responseGoogle}
     cookiePolicy={'single_host_origin'}
+    
   />
 </div>
 
