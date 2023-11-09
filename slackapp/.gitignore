@@ -3,3 +3,4 @@ slackapp/.env
 venv
 .env
 cred.json
+credss.json
