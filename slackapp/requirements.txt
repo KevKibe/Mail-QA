@@ -17,3 +17,8 @@ boto3
 pdfminer
 pytz
 streamlit
+playsound==1.2.2 
+SpeechRecognition
+pyaudio
+pyobjc
+elevenlabs

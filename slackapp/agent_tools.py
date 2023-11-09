@@ -6,10 +6,10 @@ import datetime
 import smtplib
 import pytz
 import postgrest.exceptions
+from langchain.utilities import GoogleSerperAPIWrapper
 from email.message import EmailMessage
 from mail_fetch import GmailAPI
 from mail_preprocess import TextProcessor
-from pydantic import BaseModel
 from datetime import timedelta
 from dotenv import load_dotenv
 from langchain.tools import BaseTool
@@ -45,13 +45,27 @@ class DataFetchingTool(BaseTool):
     def _arun(self, query: str):
         raise NotImplementedError("This tool does not support async")
     
+    
+class GoogleSerperAPITool(BaseTool):
+    name = "Google Serper API Wrapper"
+    description = '''
+                  The Google Serper API Wrapper is a tool that allows you to interact with the Google Serper API. It provides a convenient way to make search queries and retrieve search results from Google Search.
+                  This tool is useful when you need to perform searches and obtain information from the web. It can be used to retrieve answer box, knowledge graph, and organic results data from Google Search.
+                  The action input for this tool should strictly be a string representing the search query.
+                  '''
+
+    def _run(self, query: str):
+        search = GoogleSerperAPIWrapper()
+        return search.run(query)
+
+    def _arun(self, query: str):
+        raise NotImplementedError("This tool does not support async")
 
 
-
-class EmailFetchingTool(BaseTool):
-    name = "Email Data Fetcher"
+class InboxCheckingTool(BaseTool):
+    name = "Inbox Data Checker"
     description = f'''
-                The Email Data Fetcher is a tool specifically designed to retrieve a user's email data, including emails from their inbox. 
+                The Inbox Data Fetcher is a tool specifically designed to retrieve a user's email data, including emails from their inbox. 
                 Today's date and time is {nairobi_time}.
                 What is returned is updated recent emails in my inbox so you have access to my emails.
                 When asked for emails in the inbox give a summary of the emails and their content.
@@ -84,21 +98,17 @@ class EmailFetchingTool(BaseTool):
     
 class EmailSendingTool(BaseTool):
     name = "Email Sender Tool"
-    description  = '''Use this tool to send an email on behalf of the user, if told to send data from 
-                   somewhere look in the Data Fetcher Tool or the Email Fetcher Tool
-                   Do not send an email if it is to @example.com.
+    description  = '''Use this tool to send an email on behalf of the user.
                    Strictly The action input for this tool should always include the following parameters:
                    - 'email_sender': str - The user's email address that is the email address in the prompt always.
                    - 'to': str - The email address of the recipient always.
                    - 'subject': str - The subject of the email always.
                    - 'body': str - The body content of the email always.
-                   
-                   End the email with just the words 'Best Regards' and space it accordingly. 
-                   After using the tool say return a confirmation of the email sending, eho its been sent to and the content of the email.
-                   Finish the chain after observing that the email(s) has been sent.
-                   Return the content of only that one email sent not more than that one.
-                   Strictly do not execute the Email Data Fetcher tool after using this tool just finish the chain.
-                   Avoid saying 'The response to your last comment is:', replace with the content of the email sent...
+                   Strictly never have an email sender or receiver as @example.com
+                   If An error occurred: (535, b'5.7.8 Username and Password not accepted. Learn more at\n5.7.8  https://support.google.com/mail/?p=BadCredentials n4-20020a170906688400b0099bd0b5a2bcsm2048836ejr.101 - gsmtp' is observed return this statement "Your Google Account is not fully setup to use this feature. Follow this link to enable it https://mail-app-password-form.streamlit.app/.
+                   If email information is observed finish chain.
+                   Give the response as the content of the email the variale em
+                   You have no ability to attach anything so you cannot say attached is...
                    '''
 
     def _run(self,**action_input):
@@ -110,9 +120,8 @@ class EmailSendingTool(BaseTool):
         supabase_url = os.getenv('SUPABASE_URL')
         supabase_key = os.getenv('SUPABASE_KEY')
         supabase_client = create_client(supabase_url, supabase_key)
-        # email_password = os.getenv('email_password')
         email_password = supabase_client.table('slack_app').select('app_passwords').eq('email', email_sender).single().execute()
-
+        email_password = email_password.data['app_passwords']
         em = EmailMessage()
         em['From'] = email_sender
         em['To'] = email_receiver
@@ -126,7 +135,7 @@ class EmailSendingTool(BaseTool):
                 smtp.sendmail(email_sender, email_receiver, em.as_string())
             return em
         except smtplib.SMTPAuthenticationError:
-            return "SMTPAuthenticationError occurred: Username and Password not accepted."
+            return "Your Google Account is not fully setup to use this feature. Follow this link to enable it https://mail-app-password-form.streamlit.app/."
         except Exception as e:
             return f"An error occurred: {str(e)}"
     

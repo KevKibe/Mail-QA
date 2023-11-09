@@ -23,9 +23,10 @@ def run_authentication_flow():
     flow = InstalledAppFlow.from_client_secrets_file(
         'cred.json',
         scopes=SCOPES,
-        redirect_uri='https://localhost:8050'
+        # redirect_uri='https://e719-41-80-117-13.ngrok-free.app:8081/oauth2/callback',
+        redirect_uri='http://localhost:8050',
     )
 
-    flow.run_local_server(port=8050, prompt='consent', authorization_prompt_message='')
+    flow.run_local_server( port = 8050, prompt='consent', authorization_prompt_message='')
 
     return flow.credentials

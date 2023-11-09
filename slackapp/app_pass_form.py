@@ -4,15 +4,16 @@ from supabase import create_client
 from dotenv import load_dotenv
 load_dotenv()
 
-supabase_url = os.getenv('SUPABASE_URL')
-supabase_key = os.getenv('SUPABASE_KEY')
+supabase_url = st.secrets["supabase"]["url"]
+supabase_key = st.secrets["supabase"]["key"]
+
 supabase_client = create_client(supabase_url, supabase_key)
 
 def store_app_password(email, app_passwords, supabase_client):
     """Stores the passwords in the Supabase database."""
     try:
         supabase_client.table('slack_app').update({'app_passwords': app_passwords}).match({'email': email}).execute()
-        st.write("Success, You can now close and go back to the app")
+        st.write("Success, You can now close and go back to the app and resend the prompt")
     except Exception as e:
         st.write(f"An error occurred. Try again")
 
