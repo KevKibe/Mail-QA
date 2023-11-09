@@ -2,274 +2,318 @@
 
 body
 {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-
-    header
-    {
-        @extend .shadowed;
-        height: 65px;
-        width: 100%;
-        z-index: 99;
-        position: sticky;
-        top: 0;
+        background: rgb(6, 2, 21);
+        background: radial-gradient(circle, rgb(0, 10, 28) 10%, rgb(0, 0, 11) 56%);
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
-        padding-top: 15px;
-        padding-left: 2%;
-        display: inline-flex;
-        background-color: $white;
-        p
-        {
-        
-            font-size: 20px;
-            background: linear-gradient(45deg, #149ddd, #176c8e);
-            -webkit-background-clip: text;
-            color: transparent;
-            font-weight: 500;
-            letter-spacing: 1px;
-            width: max-content;
-        }
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
 
-        nav
+        header
         {
-            padding: 0;
-            margin-left: 70%;
-
-            ul
-            {
+                height: 50px;
+                width: 100%;
+                box-sizing: border-box;
+                padding: 0.2% 1%;
                 display: inline-flex;
-                justify-content: space-between;
-                margin-top: 5px;
+                position: sticky;
+                top: 0;
+                z-index: 999;
+                background: linear-gradient(120deg, rgba(0, 12, 35, 0.601) 10%, rgba(0, 0, 11, 0.755) 56%);
+                backdrop-filter: blur(10px);
 
-                li
+                .logo
                 {
-                    margin: 0 20px;
+                        height: 90%;
 
-                    a
-                    {
-                        font-size: 14px;
-                        color: lighten($primary-color, 30);
-
-                        &:hover
+                        img
                         {
-                            color: lighten($primary-color, 10);
-                            transition: all 1s ease-out;
+                                height: 90%;
                         }
-                    }
                 }
-
-            }
-        }
-    }
-
-    main
-    {
-        justify-content: center !important;
-        height: 85vh;
-        img
-        {
-            opacity: 0;
-            position: relative;
-            animation: fadeIn 1s ease-in forwards 1;
-        }
-
-        .form-container
-        {
-            width: 40%;
-            height: 80%;
-            @extend .flex-column;
-            border-radius: 10px;
-
-            h2
-            {
-                position: relative;
-                top: -20%;
-                font-weight: 300;
-            }
-
-        }
-
-        .prompt-container
-        {
-            position: relative;
-            top: 4%;
-            width: 80%;
-            height: 100%;
-            @extend .flex-column;
-            border-radius: 10px;
-            // background-color: darken($white, 1);
-            box-sizing: border-box;
-            padding: 2%;
-
-
-
-            h2
-            {
-                font-weight: 400;
-                margin-bottom: 10px;
-            }
-
-            .response-container
-            {
-                width: 95%;
-                height: 90%;
-                margin-bottom: 10px;
-                border-radius: inherit;
-                @extend .y-start, .x-start;
-                overflow-y: auto;
-                box-sizing: border-box;
-                padding: 2%;
-
-                .query
+                ul
                 {
-                    background-color: darken($white, 2.5);
-                    min-height: 7vh;
-                    max-height: max-content;
-                    width: 100%;
-                    @extend .x-start;
-                    box-sizing: border-box;
-                    padding: 1%;
-                    border-radius: 5px;
+                        display: inline-flex;
+                        position: relative;
+                        left: 60%;
+                        margin-top: 1%;
 
-                    p
-                    {
-                        font-size: 12px;
-                        margin-left: 1%;
-                        text-transform: none;
-                        max-width: 95%;
-                        max-height: max-content;
-                    }
-
-                    *
-                    {
-                        padding: 0;
-                    }
+                        li
+                        {
+                                list-style-type: none;
+                                margin-left: 30px;
+                                a
+                                {
+                                        @extend .txt-white;
+                                        font-weight: 100;
+                                        font-size: 12px;
+                                }
+                        }
                 }
+        }
 
-                .response
+        main
+        {
+                @extend .flex-column;
+                height: 95vh;
+                width: 100%;
+
+                .showcase
                 {
+                        width: 80%;
+                        height: 90%;
+                        @extend .flex-column;
+                        p
+                        {
+                                width: 80%;
+                                font-size: 4vw;
+                                text-align: center;
+                        }
 
-                    font-size: 12px;
-                    margin-left: 2%;
-                    margin-top: 1%;
-                    line-height: 1.7rem;
-                    letter-spacing: 0.2px;
-                    word-spacing: 5px;
-                    margin-bottom: 1%;
-                    font-weight: 500;
-                    @extend .x-start;
+                        small
+                        {
+                                text-align: center;
+                                margin-top: 3%;
+                                font-size: 16px;
+                                width: 40%;
+                        }
+                        a
+                        {
+                                margin-top: 3%;
+                                width: 20%;
+                                text-align: center;
+                                height: 60px;
+                                @extend .flex-column;
+                                border-radius: 50px;
+                        }
                 }
-            }
+        }
 
-            .form-container
-            {
-                width: 95%;
-                height: 10%;
-                background-color: darken($white, 1);
+        section
+        {
+                width: 100%;
+                height: 100vh;
+                max-height: max-content;
                 @extend .y-start;
-                margin-left: 5%;
-                
-                form
-                {
-                    display: inline-flex;
-                    width: 100%;
-                    height: 95%;
-
-                    input
-                    {
-                        width: 90%;
-                        height: 100%;
-                        border: none;
-                        border-radius: 50px;
-                        background-color: darken($white, 7);
-                        box-sizing: border-box;
-                        padding: 0 2%;
-                        text-transform: none;
-                    
-                        &::placeholder
-                        {
-                            font-size: 13px;
-                        }
-                    }
-
-                    button
-                    {
-                        margin-left: -11%;
-                        margin-top: 0.5%;
-                        width: 10%;
-                        height: 80%;
-                        border: none;
-                        border-radius: 50px;
-                        background-color: $primary-color;
-                        color: $white;
-                        font-size: 14px;
-                        box-sizing: border-box;
-                        cursor: pointer;
-                        padding: 2px;
-                        
-                    }
-                }
-            }
-
-        }
-
-    }
-
-    main, .showcase
-    {
-        width: 100%;
-        height: 85vh;
-        @extend .y-start;
-
-        .grid-2
-        {
-            width: 85%;
-            height: 85%;
-            box-sizing: border-box;
-            padding: 1%;
-
-
-            .text
-            {
-                height: 90%;
-                width: 90%;
-                border: inherit;
-                @extend .flex-column, .x-start;
+                margin-bottom: 5%;
                 box-sizing: border-box;
-                padding: 0 1%;
-                position: relative;
-                opacity: 0;
-                animation: fadeIn 1s ease-in forwards 1;
-                animation-delay: 0.5s;
+                padding: 2% 0;
 
-                h1
+                h1, span
                 {
-                    margin-bottom: 20px;
-                    text-transform: capitalize;
-                    font-size: 30px;
+                        text-transform: none;
+                        margin-bottom: 1%;
                 }
 
-                *
+                video
                 {
-                    text-transform: none;
+                        margin-top: 5%;
+                        border-radius: 10px;
+                        filter: opacity(.6);
                 }
 
-                a
+                .container
                 {
-                    font-size: 15px;
+                        border-radius: 11px;
+                        // background: linear-gradient(145deg, #000511, #000614);
+                        // box-shadow:  9px 9px 18px #000612,
+                        // -9px -9px 18px #000614;
+                        margin-top: 2%;
+                        width: 80%;
+                        height: 80%;
+                        border: 1px solid darken(rgba(#000613, .5), 1);
+                        backdrop-filter: blur(10px);
+                        box-sizing: border-box;
+                        padding: 10px;
+
+                        .prompt-quiz
+                        {
+                                width: 100%;
+                                height: 10%;
+                                background-color: lighten(#000613, 1);
+                                border-radius: inherit;
+                                display: inline-flex;
+                                box-sizing: border-box;
+                                padding: 10px;
+
+
+                                .user
+                                {
+                                        width: 30px;
+                                        height: 30px;
+                                        @extend .btn-gradient-blue, .flex-column;
+                                        padding: 10px !important;
+                                        margin-right: 1%;
+                                        font-size: 15px;
+
+                                }
+                                .quiz
+                                {
+                                        font-size: 12px;
+                                        margin-top: 0.5%;
+                                        text-transform: none;
+                                }
+                        }
+
+                        .response
+                        {
+                                margin-top: 1%;
+                                height: 86%;
+                                width: 100%;
+                                background-color: lighten(#000613, 1);
+                                border-radius: inherit;
+                                display: inline-flex;
+                                box-sizing: border-box;
+                                padding: 10px;
+
+
+                                .gpt
+                                {
+                                        img
+                                        {
+                                                position: relative;
+                                                height: 8%;
+                                                animation: rotate 50s ease-in infinite;
+                                        }
+                                }
+
+                                p
+                                {
+                                        font-size: 12px;
+                                        margin: 0 8px;
+                                        text-transform: none;
+                                        letter-spacing: 2px;
+                                        line-height: 1.6rem;
+                                }
+                        }
+
+                }
+                .try
+                {
+                        border-radius: 50px;
+                        margin-top: 1%;
+                        width: 15%;
+                        height: 60px;
+                        text-align: center;
+                        @extend .flex-column;
                 }
 
-                p
+                .grid-container
                 {
-                    width: 90%;
-                    margin-bottom: 30px;
-                    font-size: 14px;
-                    line-height: 2rem;
+                        width: 80%;
+                        height: 80%;
+                        border: 1px solid darken(rgba(#022061, .8), 10);
+                        border-radius: 20px;
+                        margin-top: 2%;;
+                        backdrop-filter: blur(20px);
+                        background: linear-gradient(45deg, rgba(#03153d, 0.2), rgba(#000309, 0.8));
+
+                        @extend .grid-2;
+                        box-sizing: border-box;
+                        padding: 2%;
+                        margin-bottom: 2%;
+
+                        .grid-item
+                        {
+                                border: 1px solid darken(rgba(#082051, .8), 5);
+                                border-radius: inherit;
+                                height: 80%;
+                                width: 95%;
+                                backdrop-filter: blur(10px);
+                                box-sizing: border-box;
+                                padding: 10px;
+                                @extend .flex-column;
+
+                                img
+                                {
+                                        height: 30%;
+                                }
+
+                                p
+                                {
+                                        margin-left: 1%;
+                                        font-size: 1.5rem;
+                                        width: 80%;
+                                        text-align: center;
+                                }
+                        }
+                }
+                .grid
+                {
+                        width: 80%;
+                        height: 80%;
+                        @extend .grid-2;
+                        box-sizing: border-box;
+                        padding: 1%;
+                        border: 1px solid darken(rgba(#022061, .8), 10);
+                        border-radius: 20px;
+                        margin-top: 2%;;
+                        backdrop-filter: blur(20px);
+                        background-color: 00091c;
+                        background: linear-gradient(160deg, rgba(#020615, 0.9), rgba(darken(#5690ab, 40), 0.4));
+
+
+                        img
+                        {
+                                margin-top: 10%;
+                                border-radius: 10px;
+                                width: 100%;
+                        }
+
+                        .text
+                        {
+                                box-sizing: border-box;
+                                padding-top: 22%;
+                                h1
+                                {
+                                        font-size: 3.0vw;
+                                        width: 80%;
+                                        font-weight: 100;
+                                        margin-bottom: 5%;
+                                }
+                                small
+                                {
+                                        width: 80%;
+                                        margin-bottom: 5%;
+                                }
+                        }
+                }
+        }
+
+        .partners
+        {
+            height: 55vh;
+            width: 100%;
+            @extend .y-start;
+
+
+            h1
+            {
+                font-size: 3em;
+                font-weight: 500;
+                margin-top: 1%;
+                margin-left: 1%;
+                margin-bottom: 2%;
+            }
+
+            .partners-container
+            {
+                width: 60%;
+                height: 20%;
+                box-sizing: border-box;
+                padding: 1%;
+                @extend .grid-5 ;
+                grid-gap: 20px;
+
+                img
+                {
+                    height: 4%;
                     margin-left: 1%;
+                    margin-top: 1%;
+                    border-radius: 5px;
                 }
-
             }
         }
-    }
 }
