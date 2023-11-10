@@ -148,7 +148,7 @@ class CalenderFetchingTool(BaseTool):
                   The Calender Events Fetcher is a powerful tool designed to retrieve calender events in the user's calender. 
                   The action input for this tool should always include the following parameters:
                   - 'user_email': The user's email address that is in the prompt.
-                  Respond with the events and the links to the events
+                  Respond with the events and the links to the events even if its more than one.
                   ''' 
     def _run(self, **action_input):
        email = action_input.get('user_email')
@@ -177,7 +177,8 @@ class CalenderFetchingTool(BaseTool):
                for event in events:
                    start = event['start'].get('dateTime', event['start'].get('date'))
                    summary = event['summary']
-                   events_list.append((start, summary))
+                   link = event['htmlLink']  
+                   events_list.append((start, summary, link))
                 
            return events_list
        except Exception as error:

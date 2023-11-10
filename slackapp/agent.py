@@ -28,7 +28,7 @@ class Agent:
         self.llm = ChatOpenAI(
             openai_api_key=self.openai_api_key,
             temperature=0,
-            model_name='gpt-3.5-turbo'
+            model_name='gpt-3.5-turbo-1106'
         )
         checker = EmailSenderApproval()
         callback_handler = HumanApprovalCallbackHandler(should_check=checker.should_check, approve=checker.approve)
@@ -78,12 +78,12 @@ class Agent:
         result= self.agent.run(prompt)
         return result
 
-agent = Agent()
-email = "keviinkibe@gmail.com"    
+# agent = Agent()
+# email = "keviinkibe@gmail.com"    
 
-message = input(">>>")
-user_input = email + " " + message 
-response= agent.run(user_input)
-print(response)
+# message = input(">>>")
+# user_input = email + " " + message 
+# response= agent.run(user_input)
+# print(response)
 
 # kchegz234@gmail.com and nawariholdings@gmail.com

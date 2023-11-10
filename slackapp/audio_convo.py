@@ -7,6 +7,7 @@ from agent import Agent
 from transcription import SpeechRecognition
 from elevenlabs import generate, play, set_api_key
 from user_auth import UserAuth
+import time
 
 elevenlabs_api_key = os.getenv('ELLEVEN_LABS_API')
 set_api_key(elevenlabs_api_key)
@@ -29,19 +30,19 @@ def generate_and_play_audio(text):
 
 def main():
     st.title("Talk to Mail QA Assistant")
-    st.write('''This is a web application to demonstrate the functionalities of the Mail QA Slack app. 
-             All features are active apart from fetching workspace data ''')
+    # st.write('''This is a web application to demonstrate the functionalities of the Mail QA Slack app. 
+    #          All features are active apart from fetching workspace data ''')
     speech_recognition = SpeechRecognition()
     # email = st.text_input("Email")
     email = "keviinkibe@gmail.com"
     user_auth = UserAuth(supabase_client)
 
     speech_input = st.button("Chat with the app using voice")
-    text_input = not speech_input  # Determine if we should use text input
+    text_input = not speech_input  
 
-    if text_input:
-        transcription = st.text_input("Input your Prompt")
-    else:
+    transcription = st.text_input("Input your Prompt")
+
+    if not text_input:
         audio_data = speech_recognition.record_audio()
         transcription = speech_recognition.transcribe_audio(audio_data)
 
@@ -51,14 +52,20 @@ def main():
         user_auth.check_email_and_authenticate(email)
         
         if transcription:
-            st.write(f"You want to find out: {transcription}")
-            generate_and_play_audio(transcription)
+            audio_input = f"You said: {transcription}"
+            st.write(audio_input)
+            generate_and_play_audio(audio_input)
 
             message = transcription
             user_input = email + " " + message
+            start_time = time.time()
             response = agent.run(user_input)
             st.write(f"Response: {response}")
+            end_time = time.time()
             generate_and_play_audio(response)
+            duration = end_time - start_time
+            st.write(duration)
+
 
 
 
