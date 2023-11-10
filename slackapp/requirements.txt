@@ -1,3 +1,4 @@
+pip==21.3.1
 google-auth
 google-auth-oauthlib
 google-auth-httplib2
@@ -20,6 +21,5 @@ streamlit
 playsound==1.2.2 
 SpeechRecognition
 pyaudio
-pyobjc
+# pyobjc
 elevenlabs
-pip==21.3.1
