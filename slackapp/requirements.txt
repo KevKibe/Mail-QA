@@ -22,3 +22,4 @@ SpeechRecognition
 pyaudio
 pyobjc
 elevenlabs
+pip==21.3.1
