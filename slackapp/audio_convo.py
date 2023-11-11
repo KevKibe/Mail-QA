@@ -11,7 +11,7 @@ import time
 
 supabase_url = st.secrets["supabase"]["url"]
 supabase_key = st.secrets["supabase"]["key"]
-elevenlabs_api_key = st.secrets["elleven_labs"]["key"]
+elevenlabs_api_key = st.secrets["supabase"]["keys"]
 
 
 # elevenlabs_api_key = os.getenv('ELLEVEN_LABS_API')
