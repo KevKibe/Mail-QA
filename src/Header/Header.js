@@ -14,7 +14,7 @@ function Header() {
 
           <ul>
             <li>
-              <a href="./">Home <span>/</span></a>
+              <a href="./" className='txt-gradient-light'>Home <span>/</span></a>
             </li>
             {accessToken ? (
     <li>
@@ -23,10 +23,10 @@ function Header() {
 ) : (
     <>
         <li>
-            <NavLink to="/signup">Signup</NavLink>
+            <NavLink to="/signup" className='txt-gradient'>Signup</NavLink>
         </li>
         <li>
-            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/login" className='txt-gradient-light'>Login</NavLink>
         </li>
     </>
 )}
