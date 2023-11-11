@@ -12,8 +12,9 @@ import supaImage from '../assets/img/supa.png';
 import mtImage from '../assets/img/mt.png';
 import emailCheckingVideo from '../assets/img/bg.gif';
 import devicesImage from '../assets/img/devices.png';
-import slackWorkspaceVideo from '../assets/img/email_checking.mp4';
-
+import slackWorkspaceVideo from '../assets/img/email_sending.mp4';
+import slackWorkspaceVideo2 from '../assets/img/schedule meeting.mp4';
+import previewImage from '../assets/img/preview.png';
 function Home() { 
   return (
     <>
@@ -33,48 +34,22 @@ function Home() {
         </div>
       </main>
 
-      <section>
-        <h1 className="txt-gradient-light txt-light" data-aos="fade" data-aos-duration="1000">
-          All Your answers at a <span className="txt-gradient">prompt</span>
-        </h1>
-        <div className="container">
-          <div className="prompt-quiz" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-            <p className="user">U</p>
-            <p className="quiz txt-gradient-light">
-              <TypeWriter
-                words={["Could I get a summary of all hackathon emails today"]}
-                wait={1555500}
-              />
-            </p>
-          </div>
 
-          <div className="response" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="800">
-            <p className="gpt" data-aos="fade" data-aos-duration="1000" data-aos-delay="200"><img src="./assets/img/iconlogo.png" alt="" /></p>
-            <p className="txt-gradient-light">
-              <TypeWriter
-                words={[
-                  "Here is a summary of all emails with the keyword hackathon. Subject: Amazing Hackathon: On 12 NovSummary: The email highlights an upcoming hackathon scheduled for November 12th. It promises an exciting opportunity to showcase skills, collaborate, and solve real-world problems. The event emphasizes networking, prizes, and recognition. Recipients are encouraged to register, prepare, form teams, and get ready for a day of innovation. The sender expresses enthusiasm about the recipients potential contribution.Action Items:- Save the date: November 12th.- Register for the hackathon.- Prepare ideas and skills.- Consider forming or joining a team",
-                ]}
-                wait={155000}
-              />
-            </p>
-          </div>
-        </div>
-        <a href="https://join.slack.com/t/digital-dynamos-group/shared_invite/zt-2609f7b1w-zVJylghjkdyDCucv_U~EXw" className="btn-gradient-blue try" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">Give It a try</a>
-
-      </section>
 
       <section>
-      <h1 className="txt-gradient-light txt-light" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="0">
-        Also in your Slack workspace
-      </h1>
+      <h1 class="txt-gradient-light txt-light" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="0"> <span class="txt-gradient">Use natural prompts to</span> Compose and send Emails </h1>
       <video src={slackWorkspaceVideo} width="80%" autoPlay muted loop data-aos="zoom-out-up" data-aos-duration="1000" data-aos-delay="200"></video>
     </section>
-
+<br /><br />
+    <section>
+    <h1 class="txt-gradient-light txt-light" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="0">  Schedule Meetings and Events </h1>
+      <video src={slackWorkspaceVideo2} width="80%" autoPlay muted loop data-aos="zoom-out-up" data-aos-duration="1000" data-aos-delay="200"></video>
+    </section>
+<br />
+<br />
       <section>
-      <h1 className="txt-light txt-gradient-light" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="200">
-        And That's Not All
-      </h1>
+      <h1 class="txt-light txt-gradient-light" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="200">In a nutshell</h1>
+
       <div className="grid-container" data-aos="fade" data-aos-duration="100" data-aos-delay="20">
         <div className="grid-item" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
           <p className="txt-gradient">Retrieve information shared within the workspace</p>
@@ -112,6 +87,21 @@ function Home() {
         </div>
       </div>
     </section>
+    <section>
+                <h1 class="txt-gradient-light txt-light" data-aos="fade" data-aos-duration="1000">Still to Come</h1>
+
+                <div class="grid" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="200">
+
+                        <div class="text y-start x-start ">
+                                <h1 class="txt-gradient-light">
+                                        We're coming to other workspaces too
+                                </h1>
+                                <a href="#" class="btn-gradient-blue">Get Started</a>
+                        </div>
+                        <img src={previewImage} alt="Image Preview" />
+
+                </div>
+        </section>
 
       <section className="partners" >
         <h1

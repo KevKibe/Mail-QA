@@ -42,40 +42,34 @@ function Signup() {
       // window.location.href = '/';
     }
   };
-    
-      const accessToken = localStorage.getItem('accessToken');
-      if (accessToken) {
-        //window.location.href = '/prompt';
-      }
+
+  const accessToken = localStorage.getItem('accessToken');
+  if (accessToken) {
+    // Redirect or handle the case where the user is already authenticated
+    // window.location.href = '/prompt';
+  }
   return (
     <>
-        <main>
-                <div class="hero-img">
-                        
+        <section>
+                <div class="auth-container" data-aos="flip-right" data-aos-duration="1000" data-aos-delay="0">
+                                <h1 class="txt-gradient-light txt-center">Scan Through Your workspace Effortlessly</h1>
+                                <p class="txt-gradient-light txt-center">Gone Are The Days Of Sifting Through Endless Text To Find What You Need. With MailQA, Your Workspace Experience Is About To Undergo A Revolutionary Transformation. Simply Link Your Email Address To MailQA, And Say Goodbye To Workspace Overwhelm</p>
+                                <center>
+          <GoogleLogin
+            clientId="YOUR_GOOGLE_CLIENT_ID"
+            buttonText="Signup with Google"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle} // You can handle failures here
+            cookiePolicy={'single_host_origin'}
+          />
+          </center>
                 </div>
-                <div class="signup-container">
+        </section>
+        <script src="../assets/js/scroll_min.js"></script>
 
-                        <h1 class="txt-gradient">Welcome to MailQA </h1>
-
-                        <p class="txt-white">
-                        <h1 class="txt-gradient">Scan through your emails effortlessly</h1> 
-                        </p>
-                        <a href="#" class="btn-gradient">                
-<div class="google-login-container">
-  <GoogleLogin
-    clientId="1072992643457-7719qn9nnuvmv9l94po7osa9rvgqgknq.apps.googleusercontent.com"
-    buttonText="Sign In with Google"
-    onSuccess={responseGoogle}
-    onFailure={responseGoogle}
-    cookiePolicy={'single_host_origin'} 
-  />
-</div>
-
-                </a>
-                        <a href="/login" class="txt-gradient">sign In Instead</a>
-
-                </div>
-        </main>
+        <script>
+                AOS.init()
+        </script>
     </>
   )
 }

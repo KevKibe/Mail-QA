@@ -46,37 +46,36 @@ function Login() {
 
   const accessToken = localStorage.getItem('accessToken');
   if (accessToken) {
+    // Redirect or handle the case where the user is already authenticated
     // window.location.href = '/prompt';
   }
 
   return (
     <>
-      <main>
-        <div className="hero-img"></div>
-        <div className="signup-container">
-          <h1 className="txt-gradient">Welcome Back to MailQA </h1>
-
-          <p className="txt-white">
-            As you log in, know that you're not just accessing your account; you're stepping into a space where your experiences matter, and we acknowledge that
+      <section>
+        <div className="auth-container" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="0">
+          <h1 className="txt-gradient-light txt-center">It's great to have you back</h1>
+          <p className="txt-gradient-light txt-center">
+            As You Log In, Know That You're Not Just Accessing Your Account; You're Stepping Into A Space Where Your
+            Experiences Matter, And We Acknowledge That
           </p>
+          <center>
+          <GoogleLogin
+            clientId="YOUR_GOOGLE_CLIENT_ID"
+            buttonText="Login with Google"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle} // You can handle failures here
+            cookiePolicy={'single_host_origin'}
+          />
+          </center>
+        </div>
+      </section>
 
-          <a href="#" className="btn-gradient">
-            <div className="google-login-container">
-              <GoogleLogin
-                clientId="1072992643457-7719qn9nnuvmv9l94po7osa9rvgqgknq.apps.googleusercontent.com"
-                buttonText="Sign In with Google"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-                cookiePolicy={'single_host_origin'}
-              />
-            </div>
-          </a>
-<br />
-          <a href="#" className="txt-gradient">
-            Signup Instead
-          </a>
-        </div> 
-      </main>
+      <script src="../assets/js/scroll_min.js"></script>
+
+      <script>{`
+        AOS.init();
+      `}</script>
     </>
   );
 }
