@@ -47,6 +47,7 @@ def main():
         transcription = speech_recognition.transcribe_audio(audio_data)
 
     submit_button = st.button("Submit")
+    st.spinner("processing")
 
     if email and (submit_button or speech_input):
         user_auth.check_email_and_authenticate(email)

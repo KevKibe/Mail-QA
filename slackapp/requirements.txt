@@ -1,6 +1,6 @@
 pip==21.3.1
-portaudio19-dev
-python3-all-dev
+# portaudio19-dev
+# python3-all-dev
 google-auth
 google-auth-oauthlib
 google-auth-httplib2
@@ -22,6 +22,6 @@ pytz
 streamlit
 playsound==1.2.2 
 SpeechRecognition
-pyaudio
+# pyaudio
 # pyobjc
 elevenlabs
