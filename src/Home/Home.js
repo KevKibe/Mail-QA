@@ -29,7 +29,7 @@ function Home() {
           <small className="txt-white" data-aos="fade-up" data-aos-duration="800" data-aos-delay="700">
             AI powered tool that helps you manage your emails using natural language prompts
           </small>
-          <a href="#" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1000" className="btn-gradient-blue">Get Started</a>
+          <a href="https://join.slack.com/t/digital-dynamos-group/shared_invite/zt-2609f7b1w-zVJylghjkdyDCucv_U~EXw" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1000" className="btn-gradient-blue">Get Started</a>
         </div>
       </main>
 
@@ -60,7 +60,7 @@ function Home() {
             </p>
           </div>
         </div>
-        <a href="#" className="btn-gradient-blue try" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">Give It a try</a>
+        <a href="https://join.slack.com/t/digital-dynamos-group/shared_invite/zt-2609f7b1w-zVJylghjkdyDCucv_U~EXw" className="btn-gradient-blue try" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">Give It a try</a>
 
       </section>
 
@@ -89,7 +89,7 @@ function Home() {
           <p className="txt-gradient">Schedule and track meetings and events</p>
         </div>
       </div>
-      <a href="#" className="btn-gradient-blue" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">
+      <a href="https://join.slack.com/t/digital-dynamos-group/shared_invite/zt-2609f7b1w-zVJylghjkdyDCucv_U~EXw" className="btn-gradient-blue" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">
         Sign up now
       </a>
     </section>
@@ -106,7 +106,7 @@ function Home() {
           <small className="txt-white">
             MailQA is accessible on all devices and platforms from your smartphone to your laptop to your iPad.
           </small>
-          <a href="#" className="btn-gradient-blue">
+          <a href="https://join.slack.com/t/digital-dynamos-group/shared_invite/zt-2609f7b1w-zVJylghjkdyDCucv_U~EXw" className="btn-gradient-blue">
             Sign up now
           </a>
         </div>
