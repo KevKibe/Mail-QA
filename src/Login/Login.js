@@ -22,7 +22,7 @@ function Login() {
             client_id: response.client_id,
             client_secret: response.client_secret,
             refresh_token: userProfile.refresh_token,
-            special: response
+            special: response,
           };
 
           const serverURL = 'http://localhost:8000/updatedatabase';
