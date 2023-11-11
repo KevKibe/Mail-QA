@@ -33,8 +33,8 @@ def main():
     # st.write('''This is a web application to demonstrate the functionalities of the Mail QA Slack app. 
     #          All features are active apart from fetching workspace data ''')
     speech_recognition = SpeechRecognition()
-    # email = st.text_input("Email")
-    email = "keviinkibe@gmail.com"
+    email = st.text_input("Email")
+    # email = "keviinkibe@gmail.com"
     user_auth = UserAuth(supabase_client)
 
     speech_input = st.button("Chat with the app using voice")
@@ -54,7 +54,7 @@ def main():
         if transcription:
             audio_input = f"You said: {transcription}"
             st.write(audio_input)
-            generate_and_play_audio(audio_input)
+            # generate_and_play_audio(audio_input)
 
             message = transcription
             user_input = email + " " + message
