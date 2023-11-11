@@ -9,6 +9,11 @@ from elevenlabs import generate, play, set_api_key
 from user_auth import UserAuth
 import time
 
+supabase_url = st.secrets["supabase"]["url"]
+supabase_key = st.secrets["supabase"]["key"]
+elevenlabs_api_key = st.secrets["elleven_labs"]["key"]
+
+
 elevenlabs_api_key = os.getenv('ELLEVEN_LABS_API')
 set_api_key(elevenlabs_api_key)
 load_dotenv()
