@@ -14,11 +14,11 @@ supabase_key = st.secrets["supabase"]["key"]
 elevenlabs_api_key = st.secrets["elleven_labs"]["key"]
 
 
-elevenlabs_api_key = os.getenv('ELLEVEN_LABS_API')
+# elevenlabs_api_key = os.getenv('ELLEVEN_LABS_API')
 set_api_key(elevenlabs_api_key)
 load_dotenv()
-supabase_url = os.getenv('SUPABASE_URL')
-supabase_key = os.getenv('SUPABASE_KEY')
+# supabase_url = os.getenv('SUPABASE_URL')
+# supabase_key = os.getenv('SUPABASE_KEY')
 supabase_client = create_client(supabase_url, supabase_key)
 
 agent = Agent()
