@@ -25,3 +25,4 @@ SpeechRecognition
 # pyaudio
 # pyobjc
 elevenlabs
+pymed

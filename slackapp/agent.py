@@ -6,7 +6,7 @@ from langchain.agents import AgentType, initialize_agent
 from langchain.chat_models import ChatOpenAI
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from langchain.callbacks.human import HumanApprovalCallbackHandler
-from agent_tools import DataFetchingTool, InboxCheckingTool, EmailSendingTool, CalenderFetchingTool,EventSchedulingTool, GoogleSerperAPITool
+from agent_tools import DataFetchingTool, InboxCheckingTool, EmailSendingTool, CalenderFetchingTool,EventSchedulingTool, GoogleSerperAPITool, MedicalDataFetchingTool
 load_dotenv()
 
 class EmailSenderApproval:
@@ -24,7 +24,9 @@ class EmailSenderApproval:
                                   
 class Agent:
     def __init__(self):
+        
         self.openai_api_key = os.getenv('OPENAI_API_KEY')
+
         self.llm = ChatOpenAI(
             openai_api_key=self.openai_api_key,
             temperature=0,
@@ -40,7 +42,8 @@ class Agent:
         self.calender_fetching_tool = CalenderFetchingTool()
         self.event_scheduling_tool = EventSchedulingTool()
         self.google_search_tool = GoogleSerperAPITool()
-        self.tools = [self.email_fetching_tool,self.data_fetching_tool, self.email_sending_tool, self.calender_fetching_tool, self.event_scheduling_tool, self.google_search_tool]
+        self.medical_data_fetching_tool = MedicalDataFetchingTool()
+        self.tools = [self.email_fetching_tool,self.data_fetching_tool, self.email_sending_tool, self.calender_fetching_tool, self.event_scheduling_tool, self.google_search_tool, self.medical_data_fetching_tool]
 
         self.sys_msg = """You are an assistant, assisting with email and workspace related information and 
                         based on provided questions and context. 
@@ -51,6 +54,7 @@ class Agent:
                         The email address in the question is the user's email address use that in the tools.
                         when a user says hello or what do you do, do not use any tool, just provide an action input as a response
                         when told to reply to am email first check the inbox for the email address to reply to
+                        When I say research project I mean the data in the company data
                     """
 
         self.conversational_memory = ConversationBufferWindowMemory(

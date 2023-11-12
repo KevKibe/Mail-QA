@@ -4,6 +4,7 @@ import ssl
 import json
 import datetime
 import smtplib
+from pymed import PubMed
 import pytz
 import postgrest.exceptions
 from langchain.utilities import GoogleSerperAPIWrapper
@@ -45,7 +46,30 @@ class DataFetchingTool(BaseTool):
     def _arun(self, query: str):
         raise NotImplementedError("This tool does not support async")
     
-    
+
+class MedicalDataFetchingTool(BaseTool):
+    name = "Medical Data Fetcher"
+    description = '''
+                  The Medical Data Fetcher tool is designed to retrieve relevant medical information based on a given query. 
+                  It takes a disease, condition, or medical keywords mentioned in the user's query as input and returns a list of articles and their content from PubMed related to the query. 
+                  The action input for this tool should strictly be a disease or condition or medical keywords mentioned in the user's query in string format .
+                  Donot summaroize responses.
+                  '''
+    def _run(self, query: str):
+        pubmed = PubMed(tool="MyTool", email="my@email.address")
+        query = f"({query})"
+        results = pubmed.query(query, max_results=5)
+        content = []
+        for article in results:
+            content.append(article.title + " " + article.abstract)
+        return content
+        
+
+    def _arun(self, query: str):
+        raise NotImplementedError("This tool does not support async")
+
+
+
 class GoogleSerperAPITool(BaseTool):
     name = "Google Serper API Wrapper"
     description = '''
