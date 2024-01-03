@@ -44,7 +44,9 @@ def handle_message(event, say):
         say(f"{response}")
         end_time = time.time()
         duration = end_time - start_time
-        say(f"{duration}")
+        formatted_duration = f"{duration:.2f}"
+        formatted_duration += "s"
+        say(f"{formatted_duration}")
 
 if __name__ == "__main__":
     SocketModeHandler(app, os.environ["slack_app_token"]).start()

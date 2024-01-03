@@ -1,16 +1,17 @@
-from pymed import PubMed
-import time
+import requests
 
-pubmed = PubMed(tool="MyTool", email="my@email.address")
+# Replace this URL with the actual URL where your Flask app is running
+API_URL = "http://localhost:5000/agent"
 
-# Create a query in the PubMed format
-query = "(dyslexia)"
+# Sample JSON payload
+json_payload = {
+    "email": "keviinkibe@gmail.com",
+    "message": "send an email to kchegz234@gmail.com wishing him a good day"
+}
 
-# Execute the query against the API
-results = pubmed.query(query, max_results=5)
-# print(results)
-# Loop over the articles and print out each one
-for article in results:
-    print("Title: ", article.title)
-    print("Abstract: ", article.abstract)
-    print("\n")
+# Send a POST request to the API
+response = requests.post(API_URL, json=json_payload)
+
+# Print the API response
+print("API Response:")
+print(response.text)

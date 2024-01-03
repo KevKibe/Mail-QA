@@ -10,18 +10,16 @@ from agent_tools import DataFetchingTool, InboxCheckingTool, EmailSendingTool, C
 load_dotenv()
 
 class EmailSenderApproval:
-    def __init__(self):
-        self.approval_statement = ""
-
     def should_check(self, serialized_obj):
-        return serialized_obj.get("name") == "Calender Events Fetcher"
+        return serialized_obj.get("name") == "Email Sender Tool"
 
-    def approve(self, input_str):
-        self.approval_statement = f"Do you approve of the following actions? {input_str} (Y/N): "
-        approval = input(self.approval_statement)
+    def approve(self, user_input):
+        approval_statement = f"Do you approve of the following actions? {user_input} (Y/N): "
+        # Instead of using input(), use the provided user_input
+        approval = user_input  # Use the actual user's response here
         return approval.lower() in ["y", "yes"]
-                                  
-                                  
+
+                                             
 class Agent:
     def __init__(self):
         
@@ -33,12 +31,11 @@ class Agent:
             model_name='gpt-3.5-turbo-1106'
         )
         checker = EmailSenderApproval()
-        callback_handler = HumanApprovalCallbackHandler(should_check=checker.should_check, approve=checker.approve)
-        # callback_handler.set_checker(checker)  
-        self.callbacks = [callback_handler]
+        self.callbacks = [HumanApprovalCallbackHandler(should_check=checker.should_check, approve=checker.approve)]
+
         self.data_fetching_tool = DataFetchingTool()
         self.email_fetching_tool = InboxCheckingTool()
-        self.email_sending_tool = EmailSendingTool()
+        self.email_sending_tool = EmailSendingTool(callbacks = self.callbacks)
         self.calender_fetching_tool = CalenderFetchingTool()
         self.event_scheduling_tool = EventSchedulingTool()
         self.google_search_tool = GoogleSerperAPITool()
@@ -82,12 +79,12 @@ class Agent:
         result= self.agent.run(prompt)
         return result
 
-# agent = Agent()
-# email = "keviinkibe@gmail.com"    
+agent = Agent()
+email = "keviinkibe@gmail.com"    
 
-# message = input(">>>")
-# user_input = email + " " + message 
-# response= agent.run(user_input)
-# print(response)
+message = input(">>>")
+user_input = email + " " + message 
+response= agent.run(user_input)
+print(response)
 
 # kchegz234@gmail.com and nawariholdings@gmail.com

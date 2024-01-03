@@ -131,8 +131,8 @@ class EmailSendingTool(BaseTool):
                    Strictly never have an email sender or receiver as @example.com
                    If An error occurred: (535, b'5.7.8 Username and Password not accepted. Learn more at\n5.7.8  https://support.google.com/mail/?p=BadCredentials n4-20020a170906688400b0099bd0b5a2bcsm2048836ejr.101 - gsmtp' is observed return this statement "Your Google Account is not fully setup to use this feature. Follow this link to enable it https://mail-app-password-form.streamlit.app/.
                    If email information is observed finish chain.
-                   Give the response as the content of the email the variale em
                    You have no ability to attach anything so you cannot say attached is...
+                   start the final response with 'The emails sent is and the content of the email.'
                    '''
 
     def _run(self,**action_input):

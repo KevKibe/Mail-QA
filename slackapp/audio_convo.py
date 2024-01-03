@@ -60,7 +60,7 @@ def main():
         if transcription:
             audio_input = f"You said: {transcription}"
             st.write(audio_input)
-            # generate_and_play_audio(audio_input)
+            generate_and_play_audio(audio_input)
 
             message = transcription
             user_input = email + " " + message
