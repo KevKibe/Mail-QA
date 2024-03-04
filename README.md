@@ -1,7 +1,7 @@
 
 # Mail-QA
 - Mail QA is a **workspace assistant** that seamlessly integrates information retrieval, email management, and calendar scheduling into your workspace. 
-
+- This was part of a hackathon that go to the [final stage](https://www.linkedin.com/posts/kevinkibe_a2svhackathon-innovation-techcommunity-activity-7132273378287042560-aEDT?utm_source=share&utm_medium=member_desktop) held in Addis Ababa, Ethiopia.
 ## The Problem
 - From a report by Mckinsey Global Institute, interaction workers spend:
    - **28% of their workweek managing emails**
